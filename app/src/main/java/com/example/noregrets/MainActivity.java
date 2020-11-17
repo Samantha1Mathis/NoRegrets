@@ -27,6 +27,7 @@ import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity {
+    MessageFragment messageFragment = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -158,15 +159,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void createMessageFrag(String name, String phone){
-        MessageFragment messageFragment = new MessageFragment(name, phone);
+        this.messageFragment = new MessageFragment(name, phone);
         Bundle args = new Bundle();
 
-        messageFragment.setArguments(args);
+        this.messageFragment.setArguments(args);
         FragmentTransaction transaction =
                 getSupportFragmentManager().beginTransaction();
-        messageFragment.setContainerActivity(this);
+        this.messageFragment.setContainerActivity(this);
         transaction.replace(R.id.outer,
-                messageFragment);
+                this.messageFragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
@@ -230,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
             //Checks to make sure the photoFile has been created
             if (photoFile != null) {
                 Uri photoUri = FileProvider.getUriForFile(this,
-                        "com.example.noregrets-2.fileprovider",
+                        "com.example.noregrets.fileprovider",
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
@@ -258,6 +259,17 @@ public class MainActivity extends AppCompatActivity {
             Bitmap resized = Bitmap.createBitmap(bitmap, 0, 0, size, size);
             mostPicture.setImageBitmap(resized);
         }
+    }
+
+    public void draw(View v){
+
+    }
+    /**
+     * PURPOSE: This method get initialized by the clear button then it
+     * calls the clear drawing method from the fragment
+     */
+    public void clearDrawing(View v) {
+        messageFragment.clearDrawing(v);
     }
 
 }
