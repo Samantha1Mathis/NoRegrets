@@ -1,0 +1,87 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/outer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.noregrets.SettingFragment"
+    android:orientation="vertical">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@id/outer"
+        app:layout_constraintRight_toRightOf="@id/outer"
+        android:textSize="@android:dimen/app_icon_size"
+        android:id="@+id/title"
+        android:text="Settings" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@id/outer"
+        app:layout_constraintRight_toRightOf="@id/outer"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintBottom_toTopOf="@id/theme"
+        android:id="@+id/results"
+        android:onClick="resultsClick"
+        android:text="results"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@id/outer"
+        app:layout_constraintRight_toRightOf="@id/outer"
+        app:layout_constraintTop_toBottomOf="@id/results"
+        app:layout_constraintBottom_toTopOf="@id/difficulty"
+        android:onClick="toggleTheme"
+        android:id="@+id/theme"
+        android:text="Theme" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@id/outer"
+        app:layout_constraintRight_toRightOf="@id/outer"
+        app:layout_constraintTop_toBottomOf="@id/theme"
+        app:layout_constraintBottom_toTopOf="@id/level"
+        android:id="@+id/difficulty"
+        android:textSize="35dp"
+        android:text="Difficulty" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:id="@+id/level"
+        app:layout_constraintLeft_toLeftOf="@id/outer"
+        app:layout_constraintRight_toRightOf="@id/outer"
+        app:layout_constraintTop_toBottomOf="@id/difficulty"
+        app:layout_constraintBottom_toBottomOf="@id/outer"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/sober"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif"
+            android:onClick="onRadioButtonClicked"
+            android:text="Sober"
+            android:textSize="25dp" />
+
+        <RadioButton
+            android:id="@+id/drunk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif"
+            android:onClick="onRadioButtonClicked"
+            android:text="Drunk"
+            android:textSize="25dp" />
+
+    </RadioGroup>
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
