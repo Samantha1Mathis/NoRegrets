@@ -75,7 +75,6 @@ public class NewMessageFragment extends Fragment {
                                                         String phone ="";
                                                         String name = "";
                                                         int idNum = position +1;
-
                                                         Cursor numbers =  containerActivity.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
                                                                 ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + String.valueOf(idNum), null, null);
 
@@ -84,7 +83,17 @@ public class NewMessageFragment extends Fragment {
                                                             name = numbers.getString(numbers.getColumnIndex(
                                                                     ContactsContract.Contacts.DISPLAY_NAME));
                                                         }
-                                                        ((MainActivity)getActivity()).createMessageFrag(name, phone);;
+                                                        String phoneNo = "";
+                                                        String [] pieces = phone.split("");
+                                                        for (String p:pieces){
+                                                            if (p.length() != 0){
+                                                                if (Character.isDigit(p.charAt(0))) {
+                                                                    phoneNo += p;
+                                                                }
+                                                            }
+                                                        }
+                                                        ((MainActivity)getActivity()).createMessageFrag(name, phoneNo);
+
                                                     }
                                                 }
         );

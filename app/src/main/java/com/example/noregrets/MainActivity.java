@@ -1,26 +1,31 @@
 package com.example.noregrets;
 
-import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.telephony.gsm.SmsManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.FragmentTransaction;
 
+
 import java.io.File;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -28,6 +33,7 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     MessageFragment messageFragment = null;
+    String phone="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -159,9 +165,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void createMessageFrag(String name, String phone){
+        System.out.println("????" + phone);
+        this.phone = phone;
         this.messageFragment = new MessageFragment(name, phone);
         Bundle args = new Bundle();
-
+        //args.putString("display_text", displayText);
         this.messageFragment.setArguments(args);
         FragmentTransaction transaction =
                 getSupportFragmentManager().beginTransaction();
@@ -244,9 +252,10 @@ public class MainActivity extends AppCompatActivity {
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(imageFileName, ".jpg", storageDir);
-        currentPhotoPath = image.getAbsolutePath();
+        this.currentPhotoPath = image.getAbsolutePath();
         return image;
     }
+
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
@@ -269,7 +278,65 @@ public class MainActivity extends AppCompatActivity {
      * calls the clear drawing method from the fragment
      */
     public void clearDrawing(View v) {
+
         messageFragment.clearDrawing(v);
+    }
+
+    String address;
+    public String getConversationInfo(View v) {
+        String text = ((TextView)v).getText().toString();
+        String thread_id = text.substring(text.indexOf(" :: ") + 4);
+        this.address = text.substring(text.indexOf(" || ") + 4, text.indexOf(" :: "));
+        String displayText = "";
+        displayText += "Conversation with " + address + "\n\n\n";
+        Uri uriSMSURI = Uri.parse("content://sms/");
+        Cursor cur = getContentResolver().query(uriSMSURI, null, "thread_id=" + thread_id, null, null);
+        while (cur.moveToNext()){
+            String person = cur.getString(cur.getColumnIndexOrThrow("person"));
+            String body = cur.getString(cur.getColumnIndexOrThrow("body"));
+            displayText += body + "\n---\n";
+        }
+        cur.close();
+        return displayText;
+    }
+    public void sendSMSMessage(String message) {
+        System.out.println("yes " + message);
+
+        System.out.println("addddd " + this.phone);
+
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(this.phone, null, message, null, null);
+
+            Toast.makeText(getApplicationContext(), "SMS sent.",
+                    Toast.LENGTH_LONG).show();
+
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(),
+                    "SMS faild, please try again.",
+                    Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
+    }
+
+    public void onInfoClick(View v) {
+        String name= "Number: ";
+        String displayText = "";
+        displayText = getConversationInfo(v);
+
+        this.messageFragment = new MessageFragment(name, this.address);
+        Bundle args = new Bundle();
+        args.putString("display_text", displayText);
+        this.messageFragment.setArguments(args);
+        FragmentTransaction transaction =
+                getSupportFragmentManager().beginTransaction();
+        this.messageFragment.setContainerActivity(this);
+        transaction.replace(R.id.outer,
+                this.messageFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+
+
     }
 
 }

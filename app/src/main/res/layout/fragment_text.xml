@@ -24,7 +24,7 @@
         app:layout_constraintLeft_toLeftOf="@id/outer"
         app:layout_constraintRight_toLeftOf="@id/news"
         app:layout_constraintTop_toBottomOf="@id/condition"
-        app:layout_constraintBottom_toTopOf="@id/old"
+        app:layout_constraintBottom_toBottomOf="@id/outer"
         android:text="Messages" />
 
     <Button
@@ -34,19 +34,18 @@
         app:layout_constraintLeft_toRightOf="@id/messages"
         app:layout_constraintRight_toRightOf="@id/outer"
         app:layout_constraintTop_toBottomOf="@id/condition"
-        app:layout_constraintBottom_toTopOf="@id/old"
+        app:layout_constraintBottom_toBottomOf="@id/outer"
         android:onClick="newClick"
         android:text="New Message" />
-
-    <TextView
-        android:id="@+id/old"
+    <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="@id/outer"
         app:layout_constraintRight_toRightOf="@id/outer"
-        app:layout_constraintTop_toBottomOf="@id/messages"
+        app:layout_constraintTop_toBottomOf="@id/news"
         app:layout_constraintBottom_toBottomOf="@id/outer"
-        android:text="List of previous messages" />
+        android:id="@+id/contact_list_view">
+    </ListView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

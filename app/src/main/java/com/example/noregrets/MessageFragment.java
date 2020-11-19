@@ -2,31 +2,54 @@ package com.example.noregrets;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
+
+import android.net.Uri;
 import android.os.Bundle;
+
+import android.provider.MediaStore;
+
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
 public class MessageFragment extends Fragment {
+    private static final int RESULT_OK = -1;
     public Activity containerActivity = null;
     public String name = "";
     public String phone = "";
     private DrawingView dv = null;
     private int paintColor = Color.RED;
     private float strokeSize = 15.0f;
-
+    String picturePath ="";
+    View v = null;
+    Button send;
+    Button draw;
+    Button photo;
+    EditText txtMessage;
     public MessageFragment(String name, String phone) {
         this.name = name;
         this.phone = phone;
@@ -37,10 +60,45 @@ public class MessageFragment extends Fragment {
         this.containerActivity = containerActivity;
     }
 
+    private static final int RESULT_LOAD_IMAGE = 1;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v =  inflater.inflate(R.layout.fragment_message, container, false);
+        this.v =  inflater.inflate(R.layout.fragment_message, container, false);
+        String displayText = getArguments().getString("display_text");
+        TextView tv2 = v.findViewById(R.id.messages);
+        tv2.setText(displayText);
+        send = (Button) v.findViewById(R.id.send);
+        draw = (Button) v.findViewById(R.id.draw);
+        photo = (Button) v.findViewById(R.id.photo);
+        //txtPhoneNo = (EditText) inflatedView.findViewById(R.id.txtPhoneNo);
+        txtMessage = (EditText) v.findViewById(R.id.current);
+        send.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String message = txtMessage.getText().toString();
+                ((MainActivity)getActivity()).sendSMSMessage(message);
+
+            }
+        });
+        draw.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                try {
+                    screenShot();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        photo.setOnClickListener(new View.OnClickListener(){
+
+            public void onClick(View v){
+                Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(i, RESULT_LOAD_IMAGE);
+
+            }
+         });
         TextView tv = (TextView)v.findViewById(R.id.name);
         tv.setText(this.name + " : " + this.phone);
 
@@ -51,7 +109,55 @@ public class MessageFragment extends Fragment {
         ll.addView(dv);
         return v;
     }
+    public void screenShot() throws IOException {
+        View view = this.v.findViewById(R.id.drawing);
 
+
+        //Creates a bitmap (Screenshot of canvas)
+        Bitmap bitmap = Bitmap.createBitmap(
+                view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        view.draw(canvas);
+
+        // Saves it to a file
+        File file = ((MainActivity)getActivity()).createImageFile();
+        FileOutputStream outputStream;
+        try {
+            outputStream = ((MainActivity)getActivity()).openFileOutput(String.valueOf(file), containerActivity.MODE_PRIVATE);
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        OutputStream os = new BufferedOutputStream(new FileOutputStream(file));
+        bitmap.compress(Bitmap.CompressFormat.PNG, 10, os);
+        os.close();
+        ImageView iv2 = this.v.findViewById(R.id.image);
+        BitmapFactory.Options bmOptions2 = new BitmapFactory.Options();
+        Bitmap bitmap2 = BitmapFactory.decodeFile(file.getAbsolutePath(), bmOptions2);
+        iv2.setImageBitmap(bitmap2);
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            Cursor cursor = containerActivity.getContentResolver().query(selectedImage,
+                    filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            this.picturePath = cursor.getString(columnIndex);
+            ImageView iv = this.v.findViewById(R.id.image);
+            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+            Bitmap bitmap = BitmapFactory.decodeFile(this.picturePath, bmOptions);
+
+            iv.setImageBitmap(bitmap);
+
+            cursor.close();
+        }
+    }
     /**
      * PURPOSE: This method allows the user to start over and create a new drawing
      */

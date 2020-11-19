@@ -1,44 +1,83 @@
 package com.example.noregrets;
 
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ArrayAdapter;
+
+import android.widget.ListView;
+
+
 import androidx.fragment.app.Fragment;
+
+import java.util.ArrayList;
 
 public class TextFragment extends Fragment {
 
-    public Activity containerActivity = null;
+    private Activity containerActivity = null;
+    private View v = null;
 
-    public TextFragment() {
-        // Required empty public constructor
-    }
+    private ListView messagesListView;
+    ArrayAdapter<String> messagesAdapter = null;
+    private ArrayList<String> messages = new ArrayList<String>();
+
+    public TextFragment() { }
 
     public void setContainerActivity(Activity containerActivity) {
         this.containerActivity = containerActivity;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container,
                              Bundle savedInstanceState) {
-        /*String[] from = {"place", "author"};
-        int[] to = {R.id.website, R.id.authors};
-        View v = inflater.inflate(R.layout.fragment_display, container, false);
-        SimpleAdapter simple = new SimpleAdapter(containerActivity, adapterList, R.layout.news_list, from, to);
-        newsView = v.findViewById(R.id.news_item_list);
-        newsView.setAdapter(simple);
-        newsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                            @Override
-                                            public void onItemClick (AdapterView < ? > adapter, View view,int position, long arg){
-                                                ((MainActivity)getActivity()).createMessageFragment(position, info);
-                                            }
-                                        }
-        );
-        return v;*/
-        return inflater.inflate(R.layout.fragment_text, container, false);
+        v = inflater.inflate(R.layout.fragment_text, container, false);
 
-
+        return v;
     }
+
+    @Override
+    public void onCreate(Bundle savedInstance){
+        super.onCreate(savedInstance);
+        getContacts();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setupContactsAdapter();
+    }
+
+    public void getContacts() {
+
+        ContentResolver contentResolver = getActivity().getContentResolver();
+        Uri uri = Uri.parse("content://mms-sms/conversations/");
+        Cursor query = contentResolver.query(uri,
+                new String[]{"_id", "ct_t", "thread_id", "address"},
+                null, null, null);
+        while (query.moveToNext()) {
+            String thread_id = query.getString(query.getColumnIndex("thread_id"));
+            String address = query.getString((query.getColumnIndex("address")));
+            String id = query.getString(query.getColumnIndex("_id"));
+            String row = "Convo || " + address + " :: " +thread_id;
+            messages.add(row);
+        }
+        query.close();
+    }
+
+    private void setupContactsAdapter() {
+        messagesListView = containerActivity.findViewById(R.id.contact_list_view);
+        messagesAdapter = new
+                ArrayAdapter<String>(containerActivity, R.layout.text_row,
+                R.id.text_row_text_view, messages);
+        messagesListView.setAdapter(messagesAdapter);
+    }
+
 }
