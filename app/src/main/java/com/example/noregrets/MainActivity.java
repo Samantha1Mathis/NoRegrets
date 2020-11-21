@@ -16,13 +16,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.FragmentTransaction;
-
 
 import java.io.File;
 
@@ -267,9 +265,23 @@ public class MainActivity extends AppCompatActivity {
             int size = Math.min(bitmap.getWidth(), bitmap.getHeight());
             Bitmap resized = Bitmap.createBitmap(bitmap, 0, 0, size, size);
             mostPicture.setImageBitmap(resized);
+            File file = new File(currentPhotoPath);
+            sendImageIntent(file);
         }
     }
-
+    public void sendImageIntent(File file){
+        Uri uri = FileProvider.getUriForFile(this,
+                "com.example.noregrets.fileprovider", file);
+        if (!this.address.equals("")){
+            this.phone = this.address;
+        }
+        Intent smsIntent = new Intent(Intent.ACTION_SEND);
+        smsIntent.setType("vnd.android-dir/mms-sms");
+        smsIntent.setData(Uri.parse("sms:" + this.phone));
+        smsIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        smsIntent.setType("image/jpeg");
+        startActivity(smsIntent);
+    }
     public void draw(View v){
 
     }
@@ -303,18 +315,14 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("yes " + message);
 
         System.out.println("addddd " + this.phone);
-
+        if (!this.address.equals("")){
+            this.phone = this.address;
+        }
         try {
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(this.phone, null, message, null, null);
 
-            Toast.makeText(getApplicationContext(), "SMS sent.",
-                    Toast.LENGTH_LONG).show();
-
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(),
-                    "SMS faild, please try again.",
-                    Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
     }

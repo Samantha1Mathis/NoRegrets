@@ -30,6 +30,8 @@
             <intent-filter>
                 <action android:name=
                     "android.provider.Telephony.SMS_RECEIVED" />
+                <action android:name=
+                    "android.provider.Telephony.MMS_RECEIVED" />
             </intent-filter>
         </receiver>
     </application>
@@ -38,5 +40,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.SEND_MMS"/>
     <uses-permission android:name="android.permission.RECEIVE_SMS"/>
 </manifest>

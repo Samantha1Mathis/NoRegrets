@@ -16,18 +16,18 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import android.provider.MediaStore;
-
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
-
 import androidx.fragment.app.Fragment;
 
 import java.io.BufferedOutputStream;
@@ -36,6 +36,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import yuku.ambilwarna.AmbilWarnaDialog;
+
 public class MessageFragment extends Fragment {
     private static final int RESULT_OK = -1;
     public Activity containerActivity = null;
@@ -43,13 +45,15 @@ public class MessageFragment extends Fragment {
     public String phone = "";
     private DrawingView dv = null;
     private int paintColor = Color.RED;
-    private float strokeSize = 15.0f;
     String picturePath ="";
     View v = null;
     Button send;
     Button draw;
     Button photo;
     EditText txtMessage;
+    Button colorPicker;
+    int seekBarValue =0;
+    SeekBar seekBar;
     public MessageFragment(String name, String phone) {
         this.name = name;
         this.phone = phone;
@@ -73,7 +77,7 @@ public class MessageFragment extends Fragment {
         send = (Button) v.findViewById(R.id.send);
         draw = (Button) v.findViewById(R.id.draw);
         photo = (Button) v.findViewById(R.id.photo);
-        //txtPhoneNo = (EditText) inflatedView.findViewById(R.id.txtPhoneNo);
+        colorPicker = (Button) v.findViewById(R.id.color);
         txtMessage = (EditText) v.findViewById(R.id.current);
         send.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -86,6 +90,7 @@ public class MessageFragment extends Fragment {
             public void onClick(View v) {
                 try {
                     screenShot();
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -99,8 +104,32 @@ public class MessageFragment extends Fragment {
 
             }
          });
-        TextView tv = (TextView)v.findViewById(R.id.name);
-        tv.setText(this.name + " : " + this.phone);
+        colorPicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setColor();
+            }
+        });
+        seekBar=(SeekBar)v.findViewById(R.id.stroke); // initiate the Seek bar
+
+        seekBar.getProgress(); // get progress value from the Seek bar
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+               seekBarValue = progress;
+               dv.changeSize(seekBarValue);
+            }
+
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        //TextView tv = (TextView)v.findViewById(R.id.name);
+        //tv.setText(this.name + " : " + this.phone);
 
         dv = new DrawingView(containerActivity, null);
         dv.setupDrawing();
@@ -131,12 +160,15 @@ public class MessageFragment extends Fragment {
         OutputStream os = new BufferedOutputStream(new FileOutputStream(file));
         bitmap.compress(Bitmap.CompressFormat.PNG, 10, os);
         os.close();
+        //((MainActivity)getActivity()).shareImage(file);
+        ((MainActivity)getActivity()).sendImageIntent(file);
         ImageView iv2 = this.v.findViewById(R.id.image);
         BitmapFactory.Options bmOptions2 = new BitmapFactory.Options();
         Bitmap bitmap2 = BitmapFactory.decodeFile(file.getAbsolutePath(), bmOptions2);
         iv2.setImageBitmap(bitmap2);
 
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -154,7 +186,8 @@ public class MessageFragment extends Fragment {
             Bitmap bitmap = BitmapFactory.decodeFile(this.picturePath, bmOptions);
 
             iv.setImageBitmap(bitmap);
-
+            File file = new File(this.picturePath);
+            ((MainActivity)getActivity()).sendImageIntent(file);
             cursor.close();
         }
     }
@@ -169,40 +202,23 @@ public class MessageFragment extends Fragment {
      * PURPOSE: This method uses the string that was made from clicking one of the color
      * buttons and then uses that to set paintColor to the respective color that was clicked on
      *
-     * @param color, Color is what color the user wants to change the paintColor to
-     */
-    public void setColor(String color){
-        if (color.equals("RED")){
-            this.paintColor = Color.RED;
-        }else if (color.equals("BLUE")){
-            this.paintColor = Color.BLUE;
-        }else if (color.equals("GREEN")){
-            this.paintColor = Color.GREEN;
-        }else if (color.equals("YELLOW")){
-            this.paintColor = Color.YELLOW;
-        }else if (color.equals("MAG")){
-            this.paintColor = Color.MAGENTA;
-        }
-
-        dv.changeColor(paintColor);
-    }
-
-    /**
-     * PURPOSE: This method uses the string that was made from clicking one of the size
-     * buttons (small, medium or large) and then uses that to set strokeWidth to the respective
-     * size that was clicked on
      *
-     * @param size, size is what size the stroke width should be
      */
-    public void setSize(String size){
-        if (size.equals("SMALL")){
-            this.strokeSize = 5.0f;
-        }else if (size.equals("MEDIUM")){
-            this.strokeSize = 15.0f;
-        }else if (size.equals("LARGE")) {
-            this.strokeSize = 25.0f;
-        }
-        dv.changeSize(strokeSize);
+    public void setColor(){
+        AmbilWarnaDialog colorPickerDialog = new AmbilWarnaDialog(containerActivity, paintColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+            @Override
+            public void onCancel(AmbilWarnaDialog dialog) {
+
+            }
+
+            @Override
+            public void onOk(AmbilWarnaDialog dialog, int color) {
+                System.out.println("here");
+                paintColor = color;
+                dv.changeColor(paintColor);
+            }
+        });
+        colorPickerDialog.show();
     }
 
     public class DrawingView extends View {

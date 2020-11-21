@@ -6,28 +6,30 @@
     android:id="@+id/outer"
     tools:context="com.example.noregrets.MessageFragment">
 
-    <TextView
+    <!--<TextView
         android:id="@+id/name"
         android:text="name"
         app:layout_constraintLeft_toLeftOf="@id/outer"
         app:layout_constraintRight_toRightOf="@id/outer"
         app:layout_constraintTop_toTopOf="@id/outer"
         app:layout_constraintBottom_toTopOf="@id/messages"
-        android:textSize="@android:dimen/app_icon_size"
+        android:textSize="25dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"/>-->
+
+    <!-- Temp -->
 
     <TextView
         android:id="@+id/messages"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="192dp"
+        android:layout_height="321dp"
+        android:layout_marginTop="16dp"
+        android:text="previous messages"
+        app:layout_constraintBottom_toTopOf="@id/current"
         app:layout_constraintLeft_toLeftOf="@id/outer"
         app:layout_constraintRight_toLeftOf="@id/image"
-        app:layout_constraintTop_toBottomOf="@id/name"
-        app:layout_constraintBottom_toTopOf="@id/current"
-        android:text="previous messages" />
+        app:layout_constraintTop_toTopOf="@id/outer" />
 
-    <!-- Temp -->
     <ImageView
         android:id="@+id/image"
         android:layout_width="50dp"
@@ -35,12 +37,13 @@
         android:src="@drawable/mando"
         app:layout_constraintLeft_toRightOf="@id/messages"
         app:layout_constraintRight_toRightOf="@id/outer"
-        app:layout_constraintTop_toBottomOf="@id/name"
+        app:layout_constraintTop_toTopOf="@id/outer"
         app:layout_constraintBottom_toTopOf="@id/current"/>
 
     <EditText
         android:id="@+id/current"
         android:ems="15"
+        android:hint="Message"
         app:layout_constraintLeft_toLeftOf="@id/outer"
         app:layout_constraintRight_toLeftOf="@id/send"
         app:layout_constraintTop_toBottomOf="@id/messages"
@@ -50,23 +53,26 @@
 
     <Button
         android:id="@+id/send"
-        app:layout_constraintLeft_toRightOf="@id/current"
-        app:layout_constraintRight_toRightOf="@id/outer"
-        app:layout_constraintTop_toBottomOf="@id/messages"
-        app:layout_constraintBottom_toTopOf="@id/camera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Send"/>
+        android:text="Send"
+        app:layout_constraintBottom_toTopOf="@id/draw"
+        app:layout_constraintLeft_toRightOf="@id/current"
+        app:layout_constraintRight_toRightOf="@id/outer"
+        app:layout_constraintTop_toBottomOf="@id/messages" />
 
     <Button
         android:id="@+id/camera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:onClick="takePhoto"
         android:text="Camera"
         app:layout_constraintBottom_toTopOf="@id/drawing"
         app:layout_constraintLeft_toLeftOf="@id/outer"
         app:layout_constraintRight_toLeftOf="@id/photo"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/current" />
 
     <Button
@@ -74,7 +80,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="photo"
-        app:layout_constraintBottom_toTopOf="@id/drawing"
+        app:layout_constraintBottom_toTopOf="@+id/drawing"
         app:layout_constraintLeft_toRightOf="@id/camera"
         app:layout_constraintRight_toLeftOf="@id/clear"
         app:layout_constraintTop_toBottomOf="@id/current" />
@@ -83,12 +89,13 @@
         android:id="@+id/clear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:onClick="clearDrawing"
         android:text="Clear"
-        app:layout_constraintBottom_toTopOf="@id/drawing"
+        app:layout_constraintBottom_toTopOf="@+id/drawing"
         app:layout_constraintLeft_toRightOf="@id/photo"
         app:layout_constraintRight_toLeftOf="@id/draw"
-        app:layout_constraintTop_toBottomOf="@id/send" />
+        app:layout_constraintTop_toBottomOf="@id/current"/>
 
     <Button
         android:id="@+id/draw"
@@ -105,15 +112,42 @@
         android:id="@+id/drawing"
         android:layout_width="375dp"
         android:layout_height="100dp"
-        android:orientation="horizontal"
+        android:layout_gravity="center"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:layout_gravity="center"
-        app:layout_constraintBottom_toBottomOf="@id/outer"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/stroke"
+        app:layout_constraintTop_toBottomOf="@id/draw"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="@id/outer"
         app:layout_constraintRight_toRightOf="@id/outer"
-        app:layout_constraintTop_toBottomOf="@id/clear">
-    </LinearLayout>
+        tools:layout_editor_absoluteY="538dp"></LinearLayout>
+
+    <Button
+        android:id="@+id/color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="Color"
+        app:layout_constraintBottom_toBottomOf="@id/outer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/stroke"
+        app:layout_constraintRight_toRightOf="@id/outer"
+        app:layout_constraintTop_toBottomOf="@id/drawing"
+        app:layout_constraintVertical_bias="0.644" />
+
+    <SeekBar
+        android:id="@+id/stroke"
+        android:layout_width="275dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:max="50"
+        android:progress="1"
+        app:layout_constraintBottom_toBottomOf="@id/outer"
+        app:layout_constraintLeft_toLeftOf="@id/outer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/drawing" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

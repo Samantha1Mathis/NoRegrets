@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
-import android.widget.Toast;
 
 public class SmsReceiver extends BroadcastReceiver
 {
@@ -25,8 +24,6 @@ public class SmsReceiver extends BroadcastReceiver
                 str += msgs[i].getMessageBody().toString();
                 str += "n";
             }
-            //---display the new SMS message---
-            Toast.makeText(context, str, Toast.LENGTH_SHORT).show();
         }
     }
 }
