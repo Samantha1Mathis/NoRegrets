@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -14,6 +15,7 @@ import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.telephony.gsm.SmsManager;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -183,21 +185,66 @@ public class MainActivity extends AppCompatActivity {
     private static final String TASKS_THEME = "THEME";
     private static final String THEME_DARK = "DARK";
     private static final String THEME_LIGHT = "LIGHT";
-
+    //Trying to get the button to have diff background colors in theme
+    /*
+    Button b2 = (Button) findViewById(R.id.setting);
+    Button b3 = (Button)findViewById(R.id.help);
+    Button b4 = (Button)findViewById(R.id.results);
+    Button b6 = (Button)findViewById(R.id.theme);
+    Button b7 = (Button)findViewById(R.id.begin);
+    Button b8 = (Button)findViewById(R.id.next);
+    Button b9 = (Button)findViewById(R.id.submit);
+    Button b10 = (Button)findViewById(R.id.news);
+    Button b11 = (Button)findViewById(R.id.send);
+    Button b12 = (Button)findViewById(R.id.draw);
+    Button b13 = (Button)findViewById(R.id.clear);
+    Button b14 = (Button)findViewById(R.id.camera);
+    Button b15 = (Button)findViewById(R.id.photo);
+    Button b16 = (Button)findViewById(R.id.color);*/
     public void setTheme() {
         SharedPreferences sharedPrefs = this.getPreferences(Context.MODE_PRIVATE);
         if (sharedPrefs.getString(TASKS_THEME, THEME_LIGHT).equals(THEME_LIGHT)) {
             setTheme(R.style.AppThemeLight);
+            //changeColor("light");
+
         } else {
             setTheme(R.style.AppThemeDark);
+            //changeColor("dark");
         }
     }
+
+    /*public void changeColor(String theme){
+        int colorString = 0;
+        if (theme.equals("light")){
+            colorString = R.color.buttonColorLight;
+        }else{
+            colorString = R.color.buttonColor;
+        }
+        b2.setBackgroundColor(getResources().getColor(colorString));
+        b3.setBackgroundColor(getResources().getColor(colorString));
+        b4.setBackgroundColor(getResources().getColor(colorString));
+        b6.setBackgroundColor(getResources().getColor(colorString));
+        b7.setBackgroundColor(getResources().getColor(colorString));
+        b8.setBackgroundColor(getResources().getColor(colorString));
+        b9.setBackgroundColor(getResources().getColor(colorString));
+        b10.setBackgroundColor(getResources().getColor(colorString));
+        b11.setBackgroundColor(getResources().getColor(colorString));
+        b12.setBackgroundColor(getResources().getColor(colorString));
+        b13.setBackgroundColor(getResources().getColor(colorString));
+        b14.setBackgroundColor(getResources().getColor(colorString));
+        b15.setBackgroundColor(getResources().getColor(colorString));
+        b16.setBackgroundColor(getResources().getColor(colorString));
+    }*/
+
+
     public void toggleTheme(View v) {
         SharedPreferences sharedPrefs = this.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPrefs.edit();
         String theme  = sharedPrefs.getString(TASKS_THEME, THEME_LIGHT);
         if (theme.equals(THEME_LIGHT)) {
             editor.putString(TASKS_THEME, THEME_DARK);
+
+
         } else {
             editor.putString(TASKS_THEME, THEME_LIGHT);
         }
@@ -337,7 +384,7 @@ public class MainActivity extends AppCompatActivity {
                     cur.getString(cur.getColumnIndexOrThrow("reply_path_present")) + " : " +
                     cur.getString(cur.getColumnIndexOrThrow("type")) + " : " +
                     cur.getString(cur.getColumnIndexOrThrow("status")));*/
-            String phone = cur.getString(cur.getColumnIndexOrThrow("address"));
+            this.phone = cur.getString(cur.getColumnIndexOrThrow("address"));
             String name ="";
             if (Integer.parseInt(type) == 1){
                  name = getContactName(phone, this);
@@ -373,12 +420,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sendSMSMessage(String message) {
-        System.out.println("yes " + message);
-
-        System.out.println("addddd " + this.phone);
-        if (!this.address.equals("")){
-            this.phone = this.address;
-        }
         try {
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(this.phone, null, message, null, null);

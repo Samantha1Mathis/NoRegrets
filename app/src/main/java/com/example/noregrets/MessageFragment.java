@@ -99,9 +99,9 @@ public class MessageFragment extends Fragment {
         send.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String message = txtMessage.getText().toString();
-                txtMessage.getText().clear();
-                ((MainActivity)getActivity()).sendSMSMessage(message);
 
+                ((MainActivity)getActivity()).sendSMSMessage(message);
+                //txtMessage.getText().clear();
             }
         });
         draw.setOnClickListener(new View.OnClickListener() {

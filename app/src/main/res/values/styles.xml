@@ -1,16 +1,21 @@
 <resources>
 
     <style name="AppThemeLight" parent="Theme.AppCompat.Light">
-        <item name="colorPrimary">#154970</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="android:textColor">#154970</item>
-        <item name="android:background">#EEEEEE</item>
+
+        <item name="colorPrimary">#D57193</item>
+        <item name="colorPrimaryDark">#1A94F6</item>
+        <item name="android:textColor">#050505</item>
+        <item name="android:background">#A0C8E8</item>
+
     </style>
 
     <style name="AppThemeDark" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">#154970</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="android:textColor">#154970</item>
-        <item name="android:background">#242424</item>
+        <item name="colorPrimary">#DF7499</item>
+        <item name="colorPrimaryDark">#4A4AE6</item>
+        <item name="android:textColor">#8BC0EA</item>
+        <item name="android:background">#050505</item>
+
     </style>
+
+
 </resources>
