@@ -66,11 +66,13 @@ public class TextFragment extends Fragment {
             String thread_id = query.getString(query.getColumnIndex("thread_id"));
             String address = query.getString((query.getColumnIndex("address")));
             String id = query.getString(query.getColumnIndex("_id"));
-            String row = "Convo || " + address + " :: " +thread_id;
+            String name = ((MainActivity)getActivity()).getContactName(address, containerActivity);
+            String row = "Convo || " + name + " :: " +thread_id;
             messages.add(row);
         }
         query.close();
     }
+
 
     private void setupContactsAdapter() {
         messagesListView = containerActivity.findViewById(R.id.contact_list_view);

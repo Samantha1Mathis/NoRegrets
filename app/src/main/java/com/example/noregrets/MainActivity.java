@@ -10,10 +10,12 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.telephony.gsm.SmsManager;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -26,7 +28,9 @@ import java.io.File;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -163,7 +167,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void createMessageFrag(String name, String phone){
-        System.out.println("????" + phone);
         this.phone = phone;
         this.messageFragment = new MessageFragment(name, phone);
         Bundle args = new Bundle();
@@ -224,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void takePhoto (View view){
         //gets which picture was clicked in order to know where to place the new picture
-        mostPicture = (ImageView)findViewById(R.id.image);
+        //mostPicture = (ImageView)findViewById(R.id.image);
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             File photoFile = null;
@@ -264,17 +267,35 @@ public class MainActivity extends AppCompatActivity {
             //Re-figures the image to be a square
             int size = Math.min(bitmap.getWidth(), bitmap.getHeight());
             Bitmap resized = Bitmap.createBitmap(bitmap, 0, 0, size, size);
-            mostPicture.setImageBitmap(resized);
+            //mostPicture.setImageBitmap(resized);
+            addImage(resized);
             File file = new File(currentPhotoPath);
             sendImageIntent(file);
         }
     }
+
+    public void addImage(Bitmap bitmap){
+        ImageView iv = new ImageView(this);
+        LinearLayout ll = findViewById(R.id.image);
+        iv.setImageBitmap(bitmap);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(100, 75);
+        lp.setMargins(20, 20, 20, 20);
+
+        iv.setLayoutParams(lp);
+
+        ll.addView(iv);
+
+    }
+
     public void sendImageIntent(File file){
+        System.out.println(file);
+
         Uri uri = FileProvider.getUriForFile(this,
                 "com.example.noregrets.fileprovider", file);
         if (!this.address.equals("")){
             this.phone = this.address;
         }
+
         Intent smsIntent = new Intent(Intent.ACTION_SEND);
         smsIntent.setType("vnd.android-dir/mms-sms");
         smsIntent.setData(Uri.parse("sms:" + this.phone));
@@ -300,17 +321,57 @@ public class MainActivity extends AppCompatActivity {
         String thread_id = text.substring(text.indexOf(" :: ") + 4);
         this.address = text.substring(text.indexOf(" || ") + 4, text.indexOf(" :: "));
         String displayText = "";
-        displayText += "Conversation with " + address + "\n\n\n";
+        //displayText += "Conversation with " + address + "\n\n\n";
+
         Uri uriSMSURI = Uri.parse("content://sms/");
         Cursor cur = getContentResolver().query(uriSMSURI, null, "thread_id=" + thread_id, null, null);
         while (cur.moveToNext()){
-            String person = cur.getString(cur.getColumnIndexOrThrow("person"));
+            //Available columns: [_id, thread_id, address, person, date, date_sent, protocol, read, status,
+            // type, reply_path_present, subject, body, service_center, locked, sub_id, error_code, creator, seen]
+            String type = cur.getString(cur.getColumnIndexOrThrow("type"));
+            /*System.out.println(cur.getString(cur.getColumnIndexOrThrow("creator")) + " : " +
+                    cur.getString(cur.getColumnIndexOrThrow("person")) + " : " +
+                    cur.getString(cur.getColumnIndexOrThrow("thread_id")) + " : " +
+                    cur.getString(cur.getColumnIndexOrThrow("protocol")) + " : " +
+                    cur.getString(cur.getColumnIndexOrThrow("sub_id")) + " : " +
+                    cur.getString(cur.getColumnIndexOrThrow("reply_path_present")) + " : " +
+                    cur.getString(cur.getColumnIndexOrThrow("type")) + " : " +
+                    cur.getString(cur.getColumnIndexOrThrow("status")));*/
+            String phone = cur.getString(cur.getColumnIndexOrThrow("address"));
+            String name ="";
+            if (Integer.parseInt(type) == 1){
+                 name = getContactName(phone, this);
+            } else{
+                name = "me";
+            }
+
             String body = cur.getString(cur.getColumnIndexOrThrow("body"));
-            displayText += body + "\n---\n";
+            displayText += name + " : " + body + "\n---\n";
         }
         cur.close();
         return displayText;
     }
+    public String getContactName(final String phoneNumber, Context context)
+    {
+        Uri uri=Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,Uri.encode(phoneNumber));
+
+        String[] projection = new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME};
+
+        String contactName="";
+        Cursor cursor=context.getContentResolver().query(uri,projection,null,null,null);
+
+        if (cursor != null) {
+            if(cursor.moveToFirst()) {
+                contactName=cursor.getString(0);
+            }
+            cursor.close();
+        }
+        if (contactName == null || contactName.length() == 0){
+            contactName = phoneNumber;
+        }
+        return contactName;
+    }
+
     public void sendSMSMessage(String message) {
         System.out.println("yes " + message);
 
@@ -331,7 +392,6 @@ public class MainActivity extends AppCompatActivity {
         String name= "Number: ";
         String displayText = "";
         displayText = getConversationInfo(v);
-
         this.messageFragment = new MessageFragment(name, this.address);
         Bundle args = new Bundle();
         args.putString("display_text", displayText);
