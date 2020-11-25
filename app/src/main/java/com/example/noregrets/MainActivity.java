@@ -317,6 +317,7 @@ public class MainActivity extends AppCompatActivity {
             //mostPicture.setImageBitmap(resized);
             addImage(resized);
             File file = new File(currentPhotoPath);
+            System.out.println(file);
             sendImageIntent(file);
         }
     }

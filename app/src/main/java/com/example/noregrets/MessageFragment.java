@@ -191,25 +191,28 @@ public class MessageFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+        if(resultCode == RESULT_OK){
             Uri selectedImage = data.getData();
             String[] filePathColumn = {MediaStore.Images.Media.DATA};
-            Cursor cursor = containerActivity.getContentResolver().query(selectedImage,
-                    filePathColumn, null, null, null);
+
+            Cursor cursor = containerActivity.getContentResolver().query(selectedImage, filePathColumn, null, null, null);
             cursor.moveToFirst();
+
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            this.picturePath = cursor.getString(columnIndex);
-            //ImageView iv = this.v.findViewById(R.id.image);
-            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-            Bitmap bitmap = BitmapFactory.decodeFile(this.picturePath, bmOptions);
-
-            //iv.setImageBitmap(bitmap);
-            ((MainActivity)getActivity()).addImage(bitmap);
-
-            File file = new File(this.picturePath);
-            ((MainActivity)getActivity()).sendImageIntent(file);
+            String filePath = cursor.getString(columnIndex);
             cursor.close();
 
+
+            Bitmap galleryBitmap = BitmapFactory.decodeFile(filePath);
+            ((MainActivity)getActivity()).addImage(galleryBitmap);
+            File file =null;
+            try {
+                file = ((MainActivity)getActivity()).createImageFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            ((MainActivity)getActivity()).sendImageIntent(file);
         }
 
     }
@@ -252,7 +255,7 @@ public class MessageFragment extends Fragment {
         //initial color
         private int paintColor = Color.RED;
         //initial size
-        private float strokeWidth = 15.0f;
+        private float strokeWidth = 1;
         //canvas
         private Canvas drawCanvas;
         //canvas bitmap
