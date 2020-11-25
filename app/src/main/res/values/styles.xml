@@ -6,6 +6,7 @@
         <item name="colorPrimaryDark">#1A94F6</item>
         <item name="android:textColor">#050505</item>
         <item name="android:background">#A0C8E8</item>
+        <item name="android:buttonStyle">@style/ButtonTheme</item>
 
     </style>
 
@@ -14,8 +15,17 @@
         <item name="colorPrimaryDark">#4A4AE6</item>
         <item name="android:textColor">#8BC0EA</item>
         <item name="android:background">#050505</item>
-
+        <item name="android:buttonStyle">@style/ButtonThemeDark</item>
     </style>
 
+    <style name="ButtonTheme" parent="Widget.AppCompat.Button">
 
+        <item name="android:background">#EDAEC4</item>
+
+    </style>
+    <style name="ButtonThemeDark" parent="Widget.AppCompat.Button">
+
+        <item name="android:background">#6E1634</item>
+
+    </style>
 </resources>
