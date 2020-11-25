@@ -1,11 +1,16 @@
 package com.example.noregrets;
 
 import android.app.Activity;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 
@@ -17,6 +22,10 @@ public class QuestionsFragment extends Fragment {
     public Activity containerActivity = null;
     private ArrayList<Integer> primeNumbers = new ArrayList<Integer>();
     private ArrayList<Character> mathSymbols = new ArrayList<Character>();
+    Button rotate;
+    ImageView iv;
+    Animation animRotate;
+    View v = null;
     public QuestionsFragment() {
         mathSymbols.add('+');
         mathSymbols.add('-');
@@ -31,7 +40,22 @@ public class QuestionsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_questions, container, false);
+        this.v = inflater.inflate(R.layout.fragment_questions, container, false);
+        rotate = (Button) v.findViewById(R.id.rotate);
+
+
+        // Rotate
+        rotate.setOnClickListener(new View.OnClickListener() {
+            private ImageView iv = v.findViewById(R.id.timer);
+            @Override
+            public void onClick(View v) {
+                iv.setImageDrawable(getResources().getDrawable(R.drawable.timer));
+                animRotate = AnimationUtils.loadAnimation(containerActivity,
+                        R.anim.rotate);
+                this.iv.startAnimation(animRotate);
+            }
+        });
+        return v;
     }
 
     /**

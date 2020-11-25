@@ -15,7 +15,6 @@
         android:layout_height="wrap_content"
         android:onClick="settingClick"
         android:text="Settings"
-        android:background="@color/buttonColor"
         app:layout_constraintLeft_toLeftOf="@id/outer"
         app:layout_constraintTop_toTopOf="@id/outer" />
 
@@ -25,7 +24,6 @@
         app:layout_constraintRight_toRightOf="@id/outer"
         app:layout_constraintTop_toTopOf="@id/outer"
         android:id="@+id/help"
-        android:background="@color/buttonColor"
         android:onClick="helpClick"
         android:text="Help" />
 
@@ -47,7 +45,6 @@
         app:layout_constraintTop_toBottomOf="@id/title"
         app:layout_constraintBottom_toBottomOf="@id/outer"
         android:id="@+id/begin"
-        android:background="@color/buttonColor"
         android:onClick="beginClick"
         android:text="Begin" />
 
