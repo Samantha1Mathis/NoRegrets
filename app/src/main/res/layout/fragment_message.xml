@@ -6,39 +6,46 @@
     android:id="@+id/outer"
     tools:context="com.example.noregrets.MessageFragment">
 
-    <!--<TextView
+   <TextView
         android:id="@+id/name"
-        android:text="name"
         app:layout_constraintLeft_toLeftOf="@id/outer"
         app:layout_constraintRight_toRightOf="@id/outer"
         app:layout_constraintTop_toTopOf="@id/outer"
         app:layout_constraintBottom_toTopOf="@id/messages"
         android:textSize="25dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>-->
-
-    <!-- Temp -->
+        android:layout_height="wrap_content"/>
 
     <TextView
         android:id="@+id/messages"
         android:layout_width="192dp"
         android:layout_height="321dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:text="previous messages"
+        android:scrollbars = "vertical"
         app:layout_constraintBottom_toTopOf="@id/current"
         app:layout_constraintLeft_toLeftOf="@id/outer"
         app:layout_constraintRight_toLeftOf="@id/image"
-        app:layout_constraintTop_toTopOf="@id/outer" />
+        app:layout_constraintTop_toBottomOf="@id/name" />
 
-    <ImageView
+    <LinearLayout
         android:id="@+id/image"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/mando"
+        android:layout_width="100dp"
+        android:layout_height="300dp"
+        android:orientation="vertical"
         app:layout_constraintLeft_toRightOf="@id/messages"
         app:layout_constraintRight_toRightOf="@id/outer"
         app:layout_constraintTop_toTopOf="@id/outer"
         app:layout_constraintBottom_toTopOf="@id/current"/>
+<!--
+    <ListView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintLeft_toRightOf="@id/messages"
+        app:layout_constraintRight_toRightOf="@id/outer"
+        app:layout_constraintTop_toTopOf="@id/outer"
+        app:layout_constraintBottom_toTopOf="@id/current"
+        android:id="@+id/images_to_send"/>-->
 
     <EditText
         android:id="@+id/current"

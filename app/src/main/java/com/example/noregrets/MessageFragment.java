@@ -12,20 +12,26 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
 
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.method.ScrollingMovementMethod;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
@@ -35,6 +41,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
@@ -54,6 +61,11 @@ public class MessageFragment extends Fragment {
     Button colorPicker;
     int seekBarValue =0;
     SeekBar seekBar;
+    //public Activity imagesActivity = null;
+    //private ListView imagesListView;
+    //private ArrayAdapter<Bitmap> imagesAdapter = null;
+    //private ArrayList<Bitmap> images = new ArrayList<Bitmap>();
+
     public MessageFragment(String name, String phone) {
         this.name = name;
         this.phone = phone;
@@ -74,16 +86,22 @@ public class MessageFragment extends Fragment {
         String displayText = getArguments().getString("display_text");
         TextView tv2 = v.findViewById(R.id.messages);
         tv2.setText(displayText);
+        tv2.setMovementMethod(new ScrollingMovementMethod());
+        TextView tv = v.findViewById(R.id.name);
+        String name = ((MainActivity)getActivity()).getContactName(this.phone, containerActivity);
+        tv.setText(name);
         send = (Button) v.findViewById(R.id.send);
         draw = (Button) v.findViewById(R.id.draw);
         photo = (Button) v.findViewById(R.id.photo);
         colorPicker = (Button) v.findViewById(R.id.color);
         txtMessage = (EditText) v.findViewById(R.id.current);
+
         send.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String message = txtMessage.getText().toString();
-                ((MainActivity)getActivity()).sendSMSMessage(message);
 
+                ((MainActivity)getActivity()).sendSMSMessage(message);
+                //txtMessage.getText().clear();
             }
         });
         draw.setOnClickListener(new View.OnClickListener() {
@@ -128,9 +146,6 @@ public class MessageFragment extends Fragment {
 
             }
         });
-        //TextView tv = (TextView)v.findViewById(R.id.name);
-        //tv.setText(this.name + " : " + this.phone);
-
         dv = new DrawingView(containerActivity, null);
         dv.setupDrawing();
 
@@ -138,9 +153,10 @@ public class MessageFragment extends Fragment {
         ll.addView(dv);
         return v;
     }
+
+
     public void screenShot() throws IOException {
         View view = this.v.findViewById(R.id.drawing);
-
 
         //Creates a bitmap (Screenshot of canvas)
         Bitmap bitmap = Bitmap.createBitmap(
@@ -162,11 +178,13 @@ public class MessageFragment extends Fragment {
         os.close();
         //((MainActivity)getActivity()).shareImage(file);
         ((MainActivity)getActivity()).sendImageIntent(file);
-        ImageView iv2 = this.v.findViewById(R.id.image);
+        //ImageView iv2 = this.v.findViewById(R.id.image);
         BitmapFactory.Options bmOptions2 = new BitmapFactory.Options();
         Bitmap bitmap2 = BitmapFactory.decodeFile(file.getAbsolutePath(), bmOptions2);
-        iv2.setImageBitmap(bitmap2);
-
+        //iv2.setImageBitmap(bitmap2);
+        //images.add(bitmap2);
+        //System.out.println(images.get(0));
+        ((MainActivity)getActivity()).addImage(bitmap2);
     }
 
 
@@ -181,15 +199,19 @@ public class MessageFragment extends Fragment {
             cursor.moveToFirst();
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             this.picturePath = cursor.getString(columnIndex);
-            ImageView iv = this.v.findViewById(R.id.image);
+            //ImageView iv = this.v.findViewById(R.id.image);
             BitmapFactory.Options bmOptions = new BitmapFactory.Options();
             Bitmap bitmap = BitmapFactory.decodeFile(this.picturePath, bmOptions);
 
-            iv.setImageBitmap(bitmap);
+            //iv.setImageBitmap(bitmap);
+            ((MainActivity)getActivity()).addImage(bitmap);
+
             File file = new File(this.picturePath);
             ((MainActivity)getActivity()).sendImageIntent(file);
             cursor.close();
+
         }
+
     }
     /**
      * PURPOSE: This method allows the user to start over and create a new drawing

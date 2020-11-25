@@ -7,13 +7,17 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.telephony.gsm.SmsManager;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -26,7 +30,9 @@ import java.io.File;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -163,7 +169,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void createMessageFrag(String name, String phone){
-        System.out.println("????" + phone);
         this.phone = phone;
         this.messageFragment = new MessageFragment(name, phone);
         Bundle args = new Bundle();
@@ -180,21 +185,66 @@ public class MainActivity extends AppCompatActivity {
     private static final String TASKS_THEME = "THEME";
     private static final String THEME_DARK = "DARK";
     private static final String THEME_LIGHT = "LIGHT";
-
+    //Trying to get the button to have diff background colors in theme
+    /*
+    Button b2 = (Button) findViewById(R.id.setting);
+    Button b3 = (Button)findViewById(R.id.help);
+    Button b4 = (Button)findViewById(R.id.results);
+    Button b6 = (Button)findViewById(R.id.theme);
+    Button b7 = (Button)findViewById(R.id.begin);
+    Button b8 = (Button)findViewById(R.id.next);
+    Button b9 = (Button)findViewById(R.id.submit);
+    Button b10 = (Button)findViewById(R.id.news);
+    Button b11 = (Button)findViewById(R.id.send);
+    Button b12 = (Button)findViewById(R.id.draw);
+    Button b13 = (Button)findViewById(R.id.clear);
+    Button b14 = (Button)findViewById(R.id.camera);
+    Button b15 = (Button)findViewById(R.id.photo);
+    Button b16 = (Button)findViewById(R.id.color);*/
     public void setTheme() {
         SharedPreferences sharedPrefs = this.getPreferences(Context.MODE_PRIVATE);
         if (sharedPrefs.getString(TASKS_THEME, THEME_LIGHT).equals(THEME_LIGHT)) {
             setTheme(R.style.AppThemeLight);
+            //changeColor("light");
+
         } else {
             setTheme(R.style.AppThemeDark);
+            //changeColor("dark");
         }
     }
+
+    /*public void changeColor(String theme){
+        int colorString = 0;
+        if (theme.equals("light")){
+            colorString = R.color.buttonColorLight;
+        }else{
+            colorString = R.color.buttonColor;
+        }
+        b2.setBackgroundColor(getResources().getColor(colorString));
+        b3.setBackgroundColor(getResources().getColor(colorString));
+        b4.setBackgroundColor(getResources().getColor(colorString));
+        b6.setBackgroundColor(getResources().getColor(colorString));
+        b7.setBackgroundColor(getResources().getColor(colorString));
+        b8.setBackgroundColor(getResources().getColor(colorString));
+        b9.setBackgroundColor(getResources().getColor(colorString));
+        b10.setBackgroundColor(getResources().getColor(colorString));
+        b11.setBackgroundColor(getResources().getColor(colorString));
+        b12.setBackgroundColor(getResources().getColor(colorString));
+        b13.setBackgroundColor(getResources().getColor(colorString));
+        b14.setBackgroundColor(getResources().getColor(colorString));
+        b15.setBackgroundColor(getResources().getColor(colorString));
+        b16.setBackgroundColor(getResources().getColor(colorString));
+    }*/
+
+
     public void toggleTheme(View v) {
         SharedPreferences sharedPrefs = this.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPrefs.edit();
         String theme  = sharedPrefs.getString(TASKS_THEME, THEME_LIGHT);
         if (theme.equals(THEME_LIGHT)) {
             editor.putString(TASKS_THEME, THEME_DARK);
+
+
         } else {
             editor.putString(TASKS_THEME, THEME_LIGHT);
         }
@@ -224,7 +274,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void takePhoto (View view){
         //gets which picture was clicked in order to know where to place the new picture
-        mostPicture = (ImageView)findViewById(R.id.image);
+        //mostPicture = (ImageView)findViewById(R.id.image);
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             File photoFile = null;
@@ -264,17 +314,35 @@ public class MainActivity extends AppCompatActivity {
             //Re-figures the image to be a square
             int size = Math.min(bitmap.getWidth(), bitmap.getHeight());
             Bitmap resized = Bitmap.createBitmap(bitmap, 0, 0, size, size);
-            mostPicture.setImageBitmap(resized);
+            //mostPicture.setImageBitmap(resized);
+            addImage(resized);
             File file = new File(currentPhotoPath);
             sendImageIntent(file);
         }
     }
+
+    public void addImage(Bitmap bitmap){
+        ImageView iv = new ImageView(this);
+        LinearLayout ll = findViewById(R.id.image);
+        iv.setImageBitmap(bitmap);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(100, 75);
+        lp.setMargins(20, 20, 20, 20);
+
+        iv.setLayoutParams(lp);
+
+        ll.addView(iv);
+
+    }
+
     public void sendImageIntent(File file){
+        System.out.println(file);
+
         Uri uri = FileProvider.getUriForFile(this,
                 "com.example.noregrets.fileprovider", file);
         if (!this.address.equals("")){
             this.phone = this.address;
         }
+
         Intent smsIntent = new Intent(Intent.ACTION_SEND);
         smsIntent.setType("vnd.android-dir/mms-sms");
         smsIntent.setData(Uri.parse("sms:" + this.phone));
@@ -300,24 +368,58 @@ public class MainActivity extends AppCompatActivity {
         String thread_id = text.substring(text.indexOf(" :: ") + 4);
         this.address = text.substring(text.indexOf(" || ") + 4, text.indexOf(" :: "));
         String displayText = "";
-        displayText += "Conversation with " + address + "\n\n\n";
+        //displayText += "Conversation with " + address + "\n\n\n";
+
         Uri uriSMSURI = Uri.parse("content://sms/");
         Cursor cur = getContentResolver().query(uriSMSURI, null, "thread_id=" + thread_id, null, null);
         while (cur.moveToNext()){
-            String person = cur.getString(cur.getColumnIndexOrThrow("person"));
+            //Available columns: [_id, thread_id, address, person, date, date_sent, protocol, read, status,
+            // type, reply_path_present, subject, body, service_center, locked, sub_id, error_code, creator, seen]
+            String type = cur.getString(cur.getColumnIndexOrThrow("type"));
+            /*System.out.println(cur.getString(cur.getColumnIndexOrThrow("creator")) + " : " +
+                    cur.getString(cur.getColumnIndexOrThrow("person")) + " : " +
+                    cur.getString(cur.getColumnIndexOrThrow("thread_id")) + " : " +
+                    cur.getString(cur.getColumnIndexOrThrow("protocol")) + " : " +
+                    cur.getString(cur.getColumnIndexOrThrow("sub_id")) + " : " +
+                    cur.getString(cur.getColumnIndexOrThrow("reply_path_present")) + " : " +
+                    cur.getString(cur.getColumnIndexOrThrow("type")) + " : " +
+                    cur.getString(cur.getColumnIndexOrThrow("status")));*/
+            this.phone = cur.getString(cur.getColumnIndexOrThrow("address"));
+            String name ="";
+            if (Integer.parseInt(type) == 1){
+                 name = getContactName(phone, this);
+            } else{
+                name = "me";
+            }
+
             String body = cur.getString(cur.getColumnIndexOrThrow("body"));
-            displayText += body + "\n---\n";
+            displayText += name + " : " + body + "\n---\n";
         }
         cur.close();
         return displayText;
     }
-    public void sendSMSMessage(String message) {
-        System.out.println("yes " + message);
+    public String getContactName(final String phoneNumber, Context context)
+    {
+        Uri uri=Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,Uri.encode(phoneNumber));
 
-        System.out.println("addddd " + this.phone);
-        if (!this.address.equals("")){
-            this.phone = this.address;
+        String[] projection = new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME};
+
+        String contactName="";
+        Cursor cursor=context.getContentResolver().query(uri,projection,null,null,null);
+
+        if (cursor != null) {
+            if(cursor.moveToFirst()) {
+                contactName=cursor.getString(0);
+            }
+            cursor.close();
         }
+        if (contactName == null || contactName.length() == 0){
+            contactName = phoneNumber;
+        }
+        return contactName;
+    }
+
+    public void sendSMSMessage(String message) {
         try {
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(this.phone, null, message, null, null);
@@ -331,7 +433,6 @@ public class MainActivity extends AppCompatActivity {
         String name= "Number: ";
         String displayText = "";
         displayText = getConversationInfo(v);
-
         this.messageFragment = new MessageFragment(name, this.address);
         Bundle args = new Bundle();
         args.putString("display_text", displayText);
