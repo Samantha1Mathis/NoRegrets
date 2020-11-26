@@ -2,10 +2,8 @@
 <resources>
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
-    <color name="textColor">#03DAC5</color>
-
-    <color name="buttonColor">#5C182F</color>
-    <color name="buttonColorLight">#E85A8A</color>
+    <color name="colorAccent">#549CD5</color>
+    <color name="textColor">#4AA0C6</color>
+    <color name="radioColor">#8BC0EA</color>
 
 </resources>

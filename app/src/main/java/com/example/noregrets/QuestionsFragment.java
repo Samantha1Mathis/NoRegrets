@@ -26,11 +26,13 @@ public class QuestionsFragment extends Fragment {
     ImageView iv;
     Animation animRotate;
     View v = null;
-    public QuestionsFragment() {
+    String pref = "";
+    public QuestionsFragment(String pref) {
         mathSymbols.add('+');
         mathSymbols.add('-');
         mathSymbols.add('*');
         mathSymbols.add('/');
+        this.pref = pref;
     }
 
     public void setContainerActivity(Activity containerActivity) {
@@ -49,7 +51,12 @@ public class QuestionsFragment extends Fragment {
             private ImageView iv = v.findViewById(R.id.timer);
             @Override
             public void onClick(View v) {
-                iv.setImageDrawable(getResources().getDrawable(R.drawable.timer));
+                if (pref.equals("LIGHT")) {
+                    iv.setImageDrawable(getResources().getDrawable(R.drawable.timerblack));
+                }else{
+                    iv.setImageDrawable(getResources().getDrawable(R.drawable.timerwhite));
+
+                }
                 animRotate = AnimationUtils.loadAnimation(containerActivity,
                         R.anim.rotate);
                 this.iv.startAnimation(animRotate);

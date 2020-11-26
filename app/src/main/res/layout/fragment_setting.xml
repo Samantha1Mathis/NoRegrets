@@ -64,6 +64,7 @@
 
         <RadioButton
             android:id="@+id/sober"
+            style="@style/radioStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="serif"
@@ -73,6 +74,7 @@
 
         <RadioButton
             android:id="@+id/drunk"
+            style="@style/radioStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="serif"

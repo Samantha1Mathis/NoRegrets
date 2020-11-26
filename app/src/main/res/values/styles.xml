@@ -11,8 +11,8 @@
     </style>
 
     <style name="AppThemeDark" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">#DF7499</item>
-        <item name="colorPrimaryDark">#4A4AE6</item>
+        <item name="colorPrimary">#64CFFF</item>
+        <item name="colorPrimaryDark">#21345B</item>
         <item name="android:textColor">#8BC0EA</item>
         <item name="android:background">#050505</item>
         <item name="android:buttonStyle">@style/ButtonThemeDark</item>
@@ -20,12 +20,17 @@
 
     <style name="ButtonTheme" parent="Widget.AppCompat.Button">
 
-        <item name="android:background">#EDAEC4</item>
+        <item name="android:background">#4A6287</item>
 
     </style>
     <style name="ButtonThemeDark" parent="Widget.AppCompat.Button">
 
-        <item name="android:background">#6E1634</item>
+        <item name="android:background">#202020</item>
 
+    </style>
+
+    <style name="radioStyle" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:textColor">@color/radioColor</item>
+        <item name="buttonTint">@color/radioColor</item>
     </style>
 </resources>

@@ -37,20 +37,13 @@
         app:layout_constraintRight_toRightOf="@id/outer"
         app:layout_constraintTop_toTopOf="@id/outer"
         app:layout_constraintBottom_toTopOf="@id/current"/>
-<!--
-    <ListView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        app:layout_constraintLeft_toRightOf="@id/messages"
-        app:layout_constraintRight_toRightOf="@id/outer"
-        app:layout_constraintTop_toTopOf="@id/outer"
-        app:layout_constraintBottom_toTopOf="@id/current"
-        android:id="@+id/images_to_send"/>-->
 
     <EditText
         android:id="@+id/current"
         android:ems="15"
         android:hint="Message"
+        android:textColor="@color/textColor"
+        android:backgroundTint="@color/textColor"
         app:layout_constraintLeft_toLeftOf="@id/outer"
         app:layout_constraintRight_toLeftOf="@id/send"
         app:layout_constraintTop_toBottomOf="@id/messages"
@@ -109,7 +102,6 @@
         android:layout_height="wrap_content"
         android:text="Draw"
         app:layout_constraintBottom_toTopOf="@id/drawing"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toRightOf="@id/clear"
         app:layout_constraintRight_toRightOf="@id/outer"
         app:layout_constraintTop_toBottomOf="@id/send" />

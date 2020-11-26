@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Answered at least 4 questions"
-        app:layout_constraintBottom_toTopOf="@id/messages"
+        app:layout_constraintBottom_toTopOf="@id/news"
         app:layout_constraintLeft_toLeftOf="@id/outer"
         app:layout_constraintRight_toRightOf="@id/outer"
         app:layout_constraintTop_toTopOf="@id/outer" />
