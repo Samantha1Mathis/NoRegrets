@@ -58,7 +58,8 @@ public class TextFragment extends Fragment {
     public void getContacts() {
 
         ContentResolver contentResolver = getActivity().getContentResolver();
-        Uri uri = Uri.parse("content://mms-sms/conversations/");
+        //Uri uri = Uri.parse("content://mms-sms/conversations/");
+        Uri uri = Uri.parse("content://sms/inbox");
         Cursor query = contentResolver.query(uri,
                 new String[]{"_id", "ct_t", "thread_id", "address"},
                 null, null, null);

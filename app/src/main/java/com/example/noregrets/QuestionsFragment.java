@@ -38,10 +38,10 @@ public class QuestionsFragment extends Fragment {
     Animation animRotate;
     View v = null;
     String pref = "";
-    public QuestionsFragment(String pref) {
+
     public String question = "";
     public int answer;
-    public QuestionsFragment() {
+    public QuestionsFragment(String pref) {
         mathSymbols.add('+');
         mathSymbols.add('-');
         mathSymbols.add('*');
