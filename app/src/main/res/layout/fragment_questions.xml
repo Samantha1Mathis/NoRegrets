@@ -15,7 +15,7 @@
         app:layout_constraintRight_toRightOf="@id/outer"
         app:layout_constraintTop_toTopOf="@id/outer"
         app:layout_constraintBottom_toTopOf="@id/answer"
-        android:textSize="@android:dimen/app_icon_size"
+        android:textSize="25dp"
         android:text="Questions" />
 
     <EditText

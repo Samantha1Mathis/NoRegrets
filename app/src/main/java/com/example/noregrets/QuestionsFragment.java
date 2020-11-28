@@ -1,12 +1,15 @@
 package com.example.noregrets;
 
 import android.app.Activity;
+import android.content.Context;
+import android.os.AsyncTask;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -14,6 +17,14 @@ import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Random;
@@ -28,10 +39,17 @@ public class QuestionsFragment extends Fragment {
     View v = null;
     String pref = "";
     public QuestionsFragment(String pref) {
+    public String question = "";
+    public int answer;
+    public QuestionsFragment() {
         mathSymbols.add('+');
         mathSymbols.add('-');
         mathSymbols.add('*');
         mathSymbols.add('/');
+
+        Pair<String, String> equation = createEquation();
+        question = equation.first;
+        new answerSearch().execute(equation.second);
         this.pref = pref;
     }
 
@@ -41,9 +59,14 @@ public class QuestionsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+            this.v = inflater.inflate(R.layout.fragment_questions, container, false);
+            rotate = (Button) v.findViewById(R.id.rotate);
+        //View v = inflater.inflate(R.layout.fragment_questions, container, false);
+        TextView questionView = (TextView) v.findViewById(R.id.question);
+        questionView.setText(question);
         // Inflate the layout for this fragment
-        this.v = inflater.inflate(R.layout.fragment_questions, container, false);
-        rotate = (Button) v.findViewById(R.id.rotate);
+        //return v;
+
 
 
         // Rotate
@@ -84,6 +107,10 @@ public class QuestionsFragment extends Fragment {
         return true;
     }
 
+
+
+    ArrayList<Integer> factors = new ArrayList<Integer>();
+    boolean complete = false;
     /**
      * This method creates a random equation and returns a Pair
      * @return Pair   pair.first is the equation to show on the screen, pair.second is the part of the url
@@ -93,7 +120,7 @@ public class QuestionsFragment extends Fragment {
         ArrayList<Character> operations = new ArrayList<Character>();
         ArrayList<Integer> numbers = new ArrayList<Integer>();
         // check difficulty, difficulty 1 = sober, difficulty 2 = drunk
-        int difficulty = 1;
+        int difficulty = 2;
         int numbersInEquation = 3;
         String equation = "";
         String urlName = "";
@@ -106,7 +133,7 @@ public class QuestionsFragment extends Fragment {
                 equation = equation.concat(Integer.toString(number));
                 urlName = urlName.concat(Integer.toString(number));
                 if (i!=numbersInEquation-1) {
-                    equation.concat(Character.toString(operation));
+                    equation = equation.concat(Character.toString(operation));
                     if (operation == '+'){
                         urlName = urlName.concat("%2B");
                     }
@@ -115,6 +142,7 @@ public class QuestionsFragment extends Fragment {
                     }
                 }
             }
+            System.out.println(equation);
             return new Pair(equation,urlName);
         }
         else if (difficulty==2){
@@ -127,20 +155,15 @@ public class QuestionsFragment extends Fragment {
                     while(isPrime(number1)){
                         number1 = rand.nextInt(1001);
                     }
-                    // make call to factor API and create arrayList of factors
-                    // API website https://helloacm.com/tools/factor/?server=
-                    ArrayList<Integer> factors = new ArrayList<Integer>(); // set to arrayList of factors
-                    int numberOfFactorsMultiplied = rand.nextInt(factors.size());
-                    number2 = 1;
-                    for(int j=0;i<numberOfFactorsMultiplied;i++){
-                        int index = rand.nextInt(factors.size());
-                        number2*=factors.get(index);
-                        factors.remove(index);
-                    }
+                    System.out.println("number1 = " + number1);
+                    factors.clear();
+                    createFactors(number1);
+                    System.out.println("factors size is: " + factors.size() + " for " + number1);
+                    number2 = factors.get(rand.nextInt(factors.size()));
                     combination.put(new Pair<Integer,Integer>(number1,number2),operation);
                 }
                 else if(operation == '*'){
-                    number2 = rand.nextInt(2000/number1);
+                    number2 = rand.nextInt(5000/number1);
                     combination.put(new Pair<Integer,Integer>(number1,number2),operation);
                 }
                 else{
@@ -151,7 +174,7 @@ public class QuestionsFragment extends Fragment {
             for (Pair p : combination.keySet()){
                 equation = equation.concat("(" + ((Integer)p.first).toString() + ((Character)combination.get(p)).toString());
                 equation = equation.concat(((Integer)p.second).toString() + ")");
-                equation.concat(Character.toString(operations.get(rand.nextInt(2))));
+                equation = equation.concat(Character.toString(mathSymbols.get(rand.nextInt(2))));
             }
             equation = equation.substring(0,equation.length()-1);
             urlName = equation.replaceAll("\\+","%2B");
@@ -161,4 +184,63 @@ public class QuestionsFragment extends Fragment {
             return new Pair("","");
 
     }
+
+    public void createFactors(int number){
+        for (int i=2;i<number/2;i++)
+            if (number%i==0)
+                factors.add(i);
+    }
+
+
+
+    private class answerSearch extends AsyncTask<String, Void, JSONObject> {
+
+        private Context context = null;
+        public answerSearch(){
+
+        }
+
+
+        @Override
+        /**
+         * This method reads in a String from the flickr API with a custom link we use and
+         * returns the string as a json object.
+         */
+        protected JSONObject doInBackground(String... strings) {
+            JSONObject json = null;
+            try {
+                String jsonString = "";
+                String line;
+                System.out.println(strings[0]);
+                URL url = new URL("https://api.mathjs.org/v4/?expr=" + strings[0]);
+                BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+                while((line = in.readLine()) != null){
+                    System.out.println("JSON LINE" + line);
+                    jsonString += line;
+                }
+                System.out.println("json string is " + jsonString.toString());
+                answer = Integer.parseInt(jsonString);
+                return null;
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        /**
+         * This method parses the string for important info such as the photo url, owner, id, format
+         * tags, and date taken. It then sets this info into its correct locations to be displayed.
+         * @param json
+         */
+        protected void onPostExecute(JSONObject json){
+
+        }
+
+
+
+    }
+
 }
