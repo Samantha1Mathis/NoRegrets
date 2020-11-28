@@ -129,7 +129,7 @@ public class QuestionsFragment extends Fragment {
                     combination.put(new Pair<Integer,Integer>(number1,number2),operation);
                 }
                 else if(operation == '*'){
-                    number2 = rand.nextInt(2000/number1);
+                    number2 = rand.nextInt(5000/number1);
                     combination.put(new Pair<Integer,Integer>(number1,number2),operation);
                 }
                 else{
