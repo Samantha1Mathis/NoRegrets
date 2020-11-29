@@ -21,6 +21,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.method.ScrollingMovementMethod;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 
@@ -95,6 +96,9 @@ public class MessageFragment extends Fragment {
         photo = (Button) v.findViewById(R.id.photo);
         colorPicker = (Button) v.findViewById(R.id.color);
         txtMessage = (EditText) v.findViewById(R.id.current);
+        int width = (((MainActivity)getActivity()).metrics.widthPixels)/70;
+
+        txtMessage.setEms((int) width);
 
         send.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -238,7 +242,6 @@ public class MessageFragment extends Fragment {
 
             @Override
             public void onOk(AmbilWarnaDialog dialog, int color) {
-                System.out.println("here");
                 paintColor = color;
                 dv.changeColor(paintColor);
             }

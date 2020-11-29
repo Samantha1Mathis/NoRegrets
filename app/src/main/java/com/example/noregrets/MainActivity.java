@@ -15,6 +15,7 @@ import android.os.Environment;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.telephony.gsm.SmsManager;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -40,14 +41,28 @@ public class MainActivity extends AppCompatActivity {
     MessageFragment messageFragment = null;
     String phone="";
     String pref = TASKS_THEME;
+    double xInches = 0.0;
+    double yInches = 0.0;
+    DisplayMetrics metrics = new DisplayMetrics();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
         setContentView(R.layout.activity_main);
         createMainFrag();
         setTheme();
+    }
+
+    /**
+     * @return true if the screen is larger than 5 by 5 inches, fale otherwise
+     */
+    private boolean isBigScreen() {
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        this.xInches = (((float)this.metrics.widthPixels) / metrics.xdpi);
+        this.yInches = (((float)this.metrics.widthPixels) / metrics.xdpi);
+        return xInches > 5.0 && yInches > 5.0;
     }
 
     public void settingClick(View v){
@@ -180,8 +195,14 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction =
                 getSupportFragmentManager().beginTransaction();
         this.messageFragment.setContainerActivity(this);
-        transaction.replace(R.id.outer,
-                this.messageFragment);
+        if (isBigScreen()){
+            //setContentView(R.layout.activity_main_big);
+            transaction.replace(R.id.outer_big,
+                    this.messageFragment);
+        }else {
+            transaction.replace(R.id.outer,
+                    this.messageFragment);
+        }
         transaction.addToBackStack(null);
         transaction.commit();
     }

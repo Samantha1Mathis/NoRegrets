@@ -9,6 +9,7 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -38,7 +39,7 @@ public class QuestionsFragment extends Fragment {
     Animation animRotate;
     View v = null;
     String pref = "";
-
+    EditText answerQuestion;
     public String question = "";
     public int answer;
     public QuestionsFragment(String pref) {
@@ -64,6 +65,9 @@ public class QuestionsFragment extends Fragment {
         //View v = inflater.inflate(R.layout.fragment_questions, container, false);
         TextView questionView = (TextView) v.findViewById(R.id.question);
         questionView.setText(question);
+        answerQuestion = (EditText) v.findViewById(R.id.answer);
+        int width = (((MainActivity)getActivity()).metrics.widthPixels)/70;
+        answerQuestion.setEms((int) width);
         // Inflate the layout for this fragment
         //return v;
 
