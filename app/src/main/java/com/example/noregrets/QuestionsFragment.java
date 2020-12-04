@@ -35,13 +35,16 @@ public class QuestionsFragment extends Fragment {
     private ArrayList<Integer> primeNumbers = new ArrayList<Integer>();
     private ArrayList<Character> mathSymbols = new ArrayList<Character>();
     Button rotate;
+    Button next;
     ImageView iv;
     Animation animRotate;
+    Animation animSlide;
     View v = null;
     String pref = "";
     EditText answerQuestion;
     public String question = "";
     public int answer;
+    TextView questionView;
     public QuestionsFragment(String pref) {
         mathSymbols.add('+');
         mathSymbols.add('-');
@@ -62,10 +65,13 @@ public class QuestionsFragment extends Fragment {
                              Bundle savedInstanceState) {
             this.v = inflater.inflate(R.layout.fragment_questions, container, false);
             rotate = (Button) v.findViewById(R.id.rotate);
+            next = (Button) v.findViewById(R.id.next);
+
         //View v = inflater.inflate(R.layout.fragment_questions, container, false);
-        TextView questionView = (TextView) v.findViewById(R.id.question);
+        questionView = (TextView) v.findViewById(R.id.question);
         questionView.setText(question);
         answerQuestion = (EditText) v.findViewById(R.id.answer);
+
         int width = (((MainActivity)getActivity()).metrics.widthPixels)/70;
         answerQuestion.setEms((int) width);
         // Inflate the layout for this fragment
@@ -87,6 +93,20 @@ public class QuestionsFragment extends Fragment {
                 animRotate = AnimationUtils.loadAnimation(containerActivity,
                         R.anim.rotate);
                 this.iv.startAnimation(animRotate);
+            }
+        });
+        // Slide
+        next.setOnClickListener(new View.OnClickListener() {
+            //private TextView tx = v.findViewById(R.id.question);
+            @Override
+            public void onClick(View v) {
+                animSlide = AnimationUtils.loadAnimation(containerActivity,
+                        R.anim.slide);
+
+                questionView.startAnimation(animSlide);
+
+               // ((MainActivity)getActivity()).nextClick(v);
+
             }
         });
         return v;
