@@ -43,13 +43,21 @@ public class MainActivity extends AppCompatActivity {
     double xInches = 0.0;
     double yInches = 0.0;
     DisplayMetrics metrics = new DisplayMetrics();
+    boolean displayBig = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        setContentView(R.layout.activity_main);
+        System.out.println("????"+isBigScreen());
+        if (isBigScreen()){
+            setContentView(R.layout.activity_main_big);
+            displayBig = true;
+        }else {
+            setContentView(R.layout.activity_main);
+            displayBig = false;
+        }
         createMainFrag();
         setTheme();
         permission();
@@ -223,6 +231,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void createMessageFrag(String name, String phone){
+        System.out.println(displayBig);
         this.phone = phone;
         this.messageFragment = new MessageFragment(name, phone);
         Bundle args = new Bundle();
@@ -231,11 +240,15 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction =
                 getSupportFragmentManager().beginTransaction();
         this.messageFragment.setContainerActivity(this);
-        if (isBigScreen()){
+
+        if (displayBig){
+            System.out.println("hello");
             //setContentView(R.layout.activity_main_big);
             transaction.replace(R.id.outer_big,
                     this.messageFragment);
         }else {
+            System.out.println("NOOO");
+
             transaction.replace(R.id.outer,
                     this.messageFragment);
         }
@@ -346,9 +359,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void addImage(Bitmap bitmap){
         ImageView iv = new ImageView(this);
-        LinearLayout ll = findViewById(R.id.image);
+        LinearLayout ll = findViewById(R.id.image2);
         iv.setImageBitmap(bitmap);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(100, 75);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(300, 100);
         lp.setMargins(20, 20, 20, 20);
 
         iv.setLayoutParams(lp);
@@ -464,7 +477,7 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction();
         this.messageFragment.setContainerActivity(this);
         transaction.replace(R.id.outer,
-                this.messageFragment);
+                    this.messageFragment);
         transaction.addToBackStack(null);
         transaction.commit();
 
