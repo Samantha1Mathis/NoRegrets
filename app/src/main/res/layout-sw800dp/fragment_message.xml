@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="@drawable/customborder"
     android:id="@+id/outer"
     tools:context="com.example.noregrets.MessageFragment">
 
@@ -44,7 +43,7 @@
           android:orientation="vertical"
           android:scrollbars="vertical"/>
    </ScrollView>
-   s
+
 
    <EditText
        android:id="@+id/current"
@@ -75,7 +74,6 @@
        android:layout_width="190dp"
        android:layout_height="50dp"
        android:layout_marginStart="25dp"
-       android:layout_marginLeft="25dp"
        android:onClick="takePhoto"
        android:text="Camera"
        app:layout_constraintBottom_toTopOf="@id/drawing"
@@ -112,12 +110,23 @@
        android:text="Draw"
        app:layout_constraintBottom_toTopOf="@id/drawing"
        app:layout_constraintLeft_toRightOf="@id/clear"
-       app:layout_constraintRight_toRightOf="@id/outer"
+       app:layout_constraintRight_toLeftOf="@id/color"
        app:layout_constraintTop_toBottomOf="@id/send" />
+
+   <Button
+       android:id="@+id/color"
+       android:layout_width="190dp"
+       android:layout_height="50dp"
+       android:layout_marginTop="20dp"
+       android:text="Color"
+       app:layout_constraintBottom_toTopOf="@id/drawing"
+       app:layout_constraintLeft_toRightOf="@id/draw"
+       app:layout_constraintRight_toRightOf="@id/outer"
+       app:layout_constraintTop_toBottomOf="@id/send"/>
 
    <LinearLayout
        android:id="@+id/drawing"
-       android:layout_width="1200dp"
+       android:layout_width="match_parent"
        android:layout_height="230dp"
        android:layout_gravity="center"
        android:orientation="horizontal"
@@ -127,23 +136,14 @@
 
    </LinearLayout>
 
-   <Button
-       android:id="@+id/color"
-       android:layout_width="300dp"
-       android:layout_height="30dp"
-       android:layout_marginBottom="50dp"
-       android:text="Color"
-       app:layout_constraintBottom_toBottomOf="parent"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintStart_toEndOf="@+id/stroke"
-       app:layout_constraintTop_toBottomOf="@+id/drawing" />
+
 
    <SeekBar
        android:id="@+id/stroke"
-       android:layout_width="775dp"
+       android:layout_width="800dp"
        android:layout_height="50dp"
-       android:layout_marginStart="72dp"
-       android:layout_marginLeft="72dp"
+       android:layout_marginStart="100dp"
+       android:layout_marginLeft="100dp"
        android:layout_marginBottom="40dp"
        android:max="50"
        android:progress="1"

@@ -9,22 +9,22 @@
 
     <TextView
         android:id="@+id/question"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="450dp"
+        android:layout_height="80dp"
+        android:text="Questions"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toTopOf="@id/answer"
         app:layout_constraintLeft_toLeftOf="@id/outer"
         app:layout_constraintRight_toRightOf="@id/outer"
-        app:layout_constraintTop_toTopOf="@id/outer"
-        app:layout_constraintBottom_toTopOf="@id/answer"
-        android:textSize="25dp"
-        android:text="Questions" />
+        app:layout_constraintTop_toTopOf="@id/outer" />
 
     <EditText
         android:id="@+id/answer"
-        android:layout_width="236dp"
-        android:layout_height="45dp"
+        android:layout_width="500dp"
+        android:layout_height="60dp"
         android:hint="Answer"
         android:backgroundTint="@color/textColor"
-        android:ems="10"
+        android:ems="50"
         app:layout_constraintBottom_toTopOf="@id/submit"
         app:layout_constraintLeft_toLeftOf="@id/outer"
         app:layout_constraintRight_toLeftOf="@id/next"
@@ -32,13 +32,13 @@
 
     <Button
         android:id="@+id/next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="125dp"
+        android:layout_height="54dp"
         android:text="Next"
         app:layout_constraintBottom_toTopOf="@id/submit"
         app:layout_constraintLeft_toRightOf="@id/answer"
         app:layout_constraintRight_toRightOf="@id/outer"
-        app:layout_constraintTop_toTopOf="@id/question"/>
+        app:layout_constraintTop_toTopOf="@id/question" />
 
     <Button
         android:id="@+id/submit"
@@ -69,7 +69,7 @@
         app:layout_constraintRight_toRightOf="@id/outer"
         app:layout_constraintTop_toBottomOf="@id/outer"
         app:layout_constraintBottom_toBottomOf="@id/outer"
-        android:layout_width="100dp"
-        android:layout_height="100dp" />
+        android:layout_width="200dp"
+        android:layout_height="200dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

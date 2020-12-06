@@ -2,4 +2,24 @@
     <string name="app_name">NoRegrets</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="help">How To Use NoRegrets"\n"</string>
+    <string name="info">This app is to help protect you from yourself.
+        Ever send a drunk text and regretting immediately afterwards? "\n\n" Use this app to send all
+        messages. "\n\n" First go to settings and set your difficulty level. If you are sober then you\'ll get easier
+        questions to answer before being allowed to send a text. If you drunk be honest and click
+        the drunk difficulty which will make the questions you have to answer harder. "\n\n" After
+        you have set the difficulty you may choose your theme dark or light mode in settings. Your
+        preference will be saved everytime you open up the app click the button again to switch
+        themes. "\n\n" Another feature in settings will allow you to look back at your most recent results.
+        It will show your past 20 questions that you have answered and whether you answered correctly.
+        "\n\n" Once you have set up your customizations you may go back to the home page and begin. "\n\n"
+        You will be sent to a page with a question you must answer the question,  You will be given a set
+        of five questions, if you miss more than one question then a timer will appear and you must
+        wait out the time before trying again. "\n\n" Once you have answered at least four questions
+        correctly it will direct you to a list of your previous conversations, you may click on one of those
+        or click the new message button. "\n\n" The new message will direct you to a list of your contacts where
+        you can start a new conversation. Otherwise it will direct you to your conversation with the person
+        you chose. Here it acts like a normal messaging app. Where you can send texts, images, or drawings.
+        "\n\n" Enjoy and Stay Safe. "\n\n"
+    </string>
 </resources>

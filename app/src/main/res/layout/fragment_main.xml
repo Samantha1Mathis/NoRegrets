@@ -3,11 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.noregrets.MainFragment"
     android:id="@+id/outer"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.example.noregrets.MainFragment">
 
-    <!-- TODO: Update blank fragment layout -->
 
     <Button
         android:id="@+id/setting"
@@ -15,6 +14,8 @@
         android:layout_height="wrap_content"
         android:onClick="settingClick"
         android:text="Settings"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
         app:layout_constraintLeft_toLeftOf="@id/outer"
         app:layout_constraintTop_toTopOf="@id/outer" />
 
@@ -24,6 +25,8 @@
         app:layout_constraintRight_toRightOf="@id/outer"
         app:layout_constraintTop_toTopOf="@id/outer"
         android:id="@+id/help"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
         android:onClick="helpClick"
         android:text="Help" />
 
@@ -38,7 +41,7 @@
         android:id="@+id/title"
         android:text="No Regrets" />
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="@id/outer"
         app:layout_constraintRight_toRightOf="@id/outer"

@@ -2,8 +2,10 @@ package com.example.noregrets;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.media.Image;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -16,6 +18,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import androidx.annotation.RequiresApi;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import org.json.JSONException;
@@ -55,11 +59,13 @@ public class QuestionsFragment extends Fragment {
         question = equation.first;
         new answerSearch().execute(equation.second);
         this.pref = pref;
+
     }
 
     public void setContainerActivity(Activity containerActivity) {
         this.containerActivity = containerActivity;
     }
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

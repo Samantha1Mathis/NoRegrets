@@ -11,27 +11,32 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        app:layout_constraintTop_toTopOf="@id/outer"
+        app:layout_constraintBottom_toTopOf="@id/results"
         app:layout_constraintLeft_toLeftOf="@id/outer"
         app:layout_constraintRight_toRightOf="@id/outer"
-        android:textSize="@android:dimen/app_icon_size"
+        android:textSize="70dp"
         android:id="@+id/title"
         android:text="Settings" />
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="@id/outer"
-        app:layout_constraintRight_toRightOf="@id/outer"
+        app:layout_constraintRight_toLeftOf="@id/theme"
         app:layout_constraintTop_toBottomOf="@id/title"
-        app:layout_constraintBottom_toTopOf="@id/theme"
+        app:layout_constraintBottom_toTopOf="@id/difficulty"
         android:id="@+id/results"
+        android:textSize="25dp"
         android:onClick="resultsClick"
         android:text="results"/>
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="@id/outer"
+        android:textSize="25dp"
+        app:layout_constraintLeft_toRightOf="@id/results"
         app:layout_constraintRight_toRightOf="@id/outer"
-        app:layout_constraintTop_toBottomOf="@id/results"
+        app:layout_constraintTop_toBottomOf="@id/title"
         app:layout_constraintBottom_toTopOf="@id/difficulty"
         android:onClick="toggleTheme"
         android:id="@+id/theme"
@@ -44,10 +49,8 @@
         android:text="Difficulty"
         android:textSize="35dp"
         app:layout_constraintBottom_toTopOf="@id/level"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="@id/outer"
         app:layout_constraintRight_toRightOf="@id/outer"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/theme" />
 
     <RadioGroup
@@ -67,8 +70,8 @@
             android:layout_height="wrap_content"
             android:fontFamily="serif"
             android:onClick="onRadioButtonClicked"
-            android:text="Sober   "
-            android:textSize="25dp" />
+            android:text="Sober    "
+            android:textSize="35dp" />
 
         <RadioButton
             android:id="@+id/drunk"
@@ -78,7 +81,7 @@
             android:fontFamily="serif"
             android:onClick="onRadioButtonClicked"
             android:text="Drunk"
-            android:textSize="25dp" />
+            android:textSize="35dp" />
 
     </RadioGroup>
 

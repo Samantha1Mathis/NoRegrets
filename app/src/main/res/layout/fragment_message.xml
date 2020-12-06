@@ -18,9 +18,8 @@
 
     <TextView
         android:id="@+id/messages"
-        android:layout_width="192dp"
-        android:layout_height="321dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="200dp"
+        android:layout_height="300dp"
         android:text="previous messages"
         android:scrollbars = "vertical"
         app:layout_constraintBottom_toTopOf="@id/current"
@@ -28,15 +27,25 @@
         app:layout_constraintRight_toLeftOf="@id/image"
         app:layout_constraintTop_toBottomOf="@id/name" />
 
-    <LinearLayout
+
+    <ScrollView
         android:id="@+id/image"
         android:layout_width="100dp"
         android:layout_height="300dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/current"
         app:layout_constraintLeft_toRightOf="@id/messages"
         app:layout_constraintRight_toRightOf="@id/outer"
         app:layout_constraintTop_toTopOf="@id/outer"
-        app:layout_constraintBottom_toTopOf="@id/current"/>
+        app:layout_constraintVertical_bias="0.707">
+
+        <LinearLayout
+            android:id="@+id/image2"
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:orientation="vertical"
+            android:scrollbars="vertical" />
+    </ScrollView>
 
     <EditText
         android:id="@+id/current"
@@ -54,7 +63,7 @@
     <Button
         android:id="@+id/send"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="25dp"
         android:text="Send"
         app:layout_constraintBottom_toTopOf="@id/draw"
         app:layout_constraintLeft_toRightOf="@id/current"
@@ -100,6 +109,7 @@
         android:id="@+id/draw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:text="Draw"
         app:layout_constraintBottom_toTopOf="@id/drawing"
         app:layout_constraintLeft_toRightOf="@id/clear"
