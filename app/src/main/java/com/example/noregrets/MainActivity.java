@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
         displayFragment.setArguments(args);
         FragmentTransaction transaction =
                 getSupportFragmentManager().beginTransaction();
-        displayFragment.setContainerActivity(this);
+        //displayFragment.setContainerActivity(this);
         transaction.replace(R.id.outer,
                 displayFragment);
         transaction.addToBackStack(null);
@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         settingFragment.setArguments(args);
         FragmentTransaction transaction =
                 getSupportFragmentManager().beginTransaction();
-        settingFragment.setContainerActivity(this);
+        //settingFragment.setContainerActivity(this);
         transaction.replace(R.id.outer,
                 settingFragment);
         transaction.addToBackStack(null);
@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
         helpFragment.setArguments(args);
         FragmentTransaction transaction =
                 getSupportFragmentManager().beginTransaction();
-        helpFragment.setContainerActivity(this);
+        //helpFragment.setContainerActivity(this);
         transaction.replace(R.id.outer,
                 helpFragment);
         transaction.addToBackStack(null);
@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
         resultsFragment.setArguments(args);
         FragmentTransaction transaction =
                 getSupportFragmentManager().beginTransaction();
-        resultsFragment.setContainerActivity(this);
+        //resultsFragment.setContainerActivity(this);
         transaction.replace(R.id.outer,
                 resultsFragment);
         transaction.addToBackStack(null);
@@ -341,7 +341,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void addImage(Bitmap bitmap){
         ImageView iv = new ImageView(this);
-        LinearLayout ll = findViewById(R.id.image2);
+        LinearLayout ll = findViewById(R.id.image);
         iv.setImageBitmap(bitmap);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(300, 100);
         lp.setMargins(20, 20, 20, 20);
