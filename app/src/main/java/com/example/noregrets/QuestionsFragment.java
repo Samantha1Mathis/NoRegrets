@@ -49,12 +49,14 @@ public class QuestionsFragment extends Fragment {
     public String question = "";
     public int answer;
     TextView questionView;
-    public QuestionsFragment(String pref) {
+    int difficulty = 1;
+    public QuestionsFragment(String pref, int difficulty) {
         mathSymbols.add('+');
         mathSymbols.add('-');
         mathSymbols.add('*');
         mathSymbols.add('/');
 
+        this.difficulty = difficulty;
         Pair<String, String> equation = createEquation();
         question = equation.first;
         new answerSearch().execute(equation.second);
@@ -106,12 +108,46 @@ public class QuestionsFragment extends Fragment {
             //private TextView tx = v.findViewById(R.id.question);
             @Override
             public void onClick(View v) {
-                animSlide = AnimationUtils.loadAnimation(containerActivity,
-                        R.anim.slide);
+                int input = 0;
+                try{
+                    input = Integer.parseInt(answerQuestion.getText().toString());
+                    ArrayList<String> sendQuestion = new ArrayList<String>();
+                    sendQuestion.add(question);
+                    sendQuestion.add(Integer.toString(answer));
+                    sendQuestion.add(answerQuestion.getText().toString());
+                    ((MainActivity) getActivity()).NumberAnswered +=1;
+                    if (input == answer){
+                        ((MainActivity) getActivity()).NumberCorrect +=1;
+                        sendQuestion.add("Correct");
+                    }
+                    else{
+                        sendQuestion.add("Incorrect");
+                    }
+                    if (((MainActivity) getActivity()).getNumberAnswered() == 5){
+                        // TODO add writing to internal storage
+                        if (((MainActivity) getActivity()).getNumberCorrect() >= 4){
+                            ((MainActivity) getActivity()).createTextFrag();
+                        }
+                        else{
+                            // TODO freeze app
 
-                questionView.startAnimation(animSlide);
+                        }
 
-               // ((MainActivity)getActivity()).nextClick(v);
+                    }
+                    else{
+
+                        ((MainActivity)getActivity()).nextClick(v);
+                    }
+                } catch (NumberFormatException e) {
+
+                }
+
+                //animSlide = AnimationUtils.loadAnimation(containerActivity,
+                       // R.anim.slide);
+
+                //questionView.startAnimation(animSlide);
+
+
 
             }
         });
@@ -150,7 +186,7 @@ public class QuestionsFragment extends Fragment {
         ArrayList<Character> operations = new ArrayList<Character>();
         ArrayList<Integer> numbers = new ArrayList<Integer>();
         // check difficulty, difficulty 1 = sober, difficulty 2 = drunk
-        int difficulty = 2;
+        //int difficulty = ;
         int numbersInEquation = 3;
         String equation = "";
         String urlName = "";

@@ -33,6 +33,7 @@ import java.io.File;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -183,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void createQuestFrag(){
         System.out.println("!!!" + pref);
-        QuestionsFragment questFragment = new QuestionsFragment(pref);
+        QuestionsFragment questFragment = new QuestionsFragment(pref, difficulty);
         Bundle args = new Bundle();
 
         questFragment.setArguments(args);
@@ -273,12 +274,12 @@ public class MainActivity extends AppCompatActivity {
         boolean checked = ((RadioButton) view).isChecked();
         if (view.getId() == R.id.sober) {
             if (checked) {
-                //do something
+                difficulty = 1;
             }
         }
         if (view.getId() == R.id.drunk) {
             if (checked) {
-                //do something
+                difficulty = 2;
             }
         }
 
@@ -464,5 +465,25 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    public int NumberAnswered = 0;
+    public int getNumberAnswered(){
+        return NumberAnswered;
+    }
+
+    public int NumberCorrect = 0;
+    public int getNumberCorrect(){
+        return NumberCorrect;
+    }
+
+    public int difficulty = 1;
+
+    private ArrayList<ArrayList<String>> allAnswers = new ArrayList<>();
+    public void addAnswer(ArrayList<String> singleQuestion){  // single question is in the format QUESTION, ANSWER, USERASNWER, CORRECT(right or wrong)
+        if (singleQuestion.size() == 4){
+            allAnswers.add(singleQuestion);
+        }
+    }
+
 
 }
