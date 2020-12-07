@@ -33,6 +33,7 @@ import java.io.File;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /*
@@ -42,7 +43,6 @@ import java.util.Date;
  * the fragments to be initialized.
  */
 public class MainActivity extends AppCompatActivity {
-    public int difficulty;
     private MessageFragment messageFragment = null;
     private String phone="";
     private String pref = TASKS_THEME;
@@ -581,6 +581,24 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
 
 
+    }
+    public int NumberAnswered = 0;
+    public int getNumberAnswered(){
+        return NumberAnswered;
+    }
+
+    public int NumberCorrect = 0;
+    public int getNumberCorrect(){
+        return NumberCorrect;
+    }
+
+    public int difficulty = 1;
+
+    private ArrayList<ArrayList<String>> allAnswers = new ArrayList<>();
+    public void addAnswer(ArrayList<String> singleQuestion){  // single question is in the format QUESTION, ANSWER, USERASNWER, CORRECT(right or wrong)
+        if (singleQuestion.size() == 4){
+            allAnswers.add(singleQuestion);
+        }
     }
 
 }
