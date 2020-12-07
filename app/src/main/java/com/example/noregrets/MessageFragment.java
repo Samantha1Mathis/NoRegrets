@@ -29,6 +29,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.fragment.app.Fragment;
 
 import java.io.BufferedOutputStream;
@@ -64,6 +66,7 @@ public class MessageFragment extends Fragment {
     private Button colorPicker;
     private int seekBarValue =0;
     private SeekBar seekBar;
+    private TextView tv2;
 
     /**
      * PURPOSE: Initializes the fragment with the name and phone number of
@@ -96,9 +99,9 @@ public class MessageFragment extends Fragment {
         String displayText = getArguments().getString("display_text");
 
         //Allows message to be scrollable
-        TextView tv2 = v.findViewById(R.id.messages);
-        tv2.setText(displayText);
-        tv2.setMovementMethod(new ScrollingMovementMethod());
+        this.tv2 = v.findViewById(R.id.messages);
+        this.tv2.setText(displayText);
+        this.tv2.setMovementMethod(new ScrollingMovementMethod());
 
         //Grabs the name of the user
         TextView tv = v.findViewById(R.id.name);
@@ -123,6 +126,7 @@ public class MessageFragment extends Fragment {
                 String message = txtMessage.getText().toString();
 
                 ((MainActivity)getActivity()).sendSMSMessage(message);
+                Toast.makeText(containerActivity, "Message Sent (Refresh Page)", Toast.LENGTH_LONG).show();
 
             }
         });
