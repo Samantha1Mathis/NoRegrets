@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.telephony.gsm.SmsManager;
@@ -60,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
         createMainFrag();
         setTheme();
         permission();
+        System.out.println("called");
+        getDifficulty();
     }
 
     /**
@@ -240,7 +243,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void createQuestFrag(){
 
-        QuestionsFragment questFragment = new QuestionsFragment(pref);
+        QuestionsFragment questFragment = new QuestionsFragment(pref, difficulty, this);
         Bundle args = new Bundle();
 
         questFragment.setArguments(args);
@@ -357,16 +360,23 @@ public class MainActivity extends AppCompatActivity {
      * @param view, the view where the radio was selected
      */
     public void onRadioButtonClicked(View view) {
-        //Determines which answer was picked
         boolean checked = ((RadioButton) view).isChecked();
         if (view.getId() == R.id.sober) {
             if (checked) {
-                //do something
+                difficulty = 1;
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putInt("Difficulty", 1);
+                editor.commit();
             }
         }
         if (view.getId() == R.id.drunk) {
             if (checked) {
-                //do something
+                difficulty = 2;
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putInt("Difficulty", 2);
+                editor.commit();
             }
         }
 
@@ -595,13 +605,30 @@ public class MainActivity extends AppCompatActivity {
         return NumberCorrect;
     }
 
-    public int difficulty = 1;
+    public int difficulty;
+    public void getDifficulty(){
+        SharedPreferences preferences =   PreferenceManager.getDefaultSharedPreferences(this);
+        this.difficulty = preferences.getInt("Difficulty", 1);
+    }
 
-    private ArrayList<ArrayList<String>> allAnswers = new ArrayList<>();
-    public void addAnswer(ArrayList<String> singleQuestion){  // single question is in the format QUESTION, ANSWER, USERASNWER, CORRECT(right or wrong)
+    public ArrayList<ArrayList<String>> allAnswers = new ArrayList<>();
+    public void addAnswer(ArrayList<String> singleQuestion){  // single question is in the format QUESTION, ANSWER, USERANSWER, CORRECT(right or wrong)
         if (singleQuestion.size() == 4){
             allAnswers.add(singleQuestion);
         }
+    }
+
+    public void createSingleAttemptResultPage(int i){
+        SingleAttemptResult displayFragment = new SingleAttemptResult(i);
+        Bundle args = new Bundle();
+
+        displayFragment.setArguments(args);
+        FragmentTransaction transaction =
+                getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.outer,
+                displayFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
 }

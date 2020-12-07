@@ -2,9 +2,11 @@ package com.example.noregrets;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +24,8 @@ import androidx.fragment.app.Fragment;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
@@ -45,8 +49,9 @@ public class QuestionsFragment extends Fragment {
     public String question = "";
     public int answer;
     private TextView questionView;
+    private Context contextHolder;
 
-    public QuestionsFragment(String pref) {
+    public QuestionsFragment(String pref, int difficulty, Context context) {
         mathSymbols.add('+');
         mathSymbols.add('-');
         mathSymbols.add('*');
@@ -57,6 +62,7 @@ public class QuestionsFragment extends Fragment {
         question = equation.first;
         new answerSearch().execute(equation.second);
         this.pref = pref;
+        contextHolder = context;
 
     }
     /**
@@ -128,6 +134,29 @@ public class QuestionsFragment extends Fragment {
                     }
                     if (((MainActivity) getActivity()).getNumberAnswered() == 5){
                         // TODO add writing to internal storage
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(contextHolder);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        int i=1;
+                        int AttemptNumber = preferences.getInt("AttemptNumber",1);
+                        for(ArrayList<String> answers: ((MainActivity) getActivity()).allAnswers){
+                            editor.putString("Attempt_" + AttemptNumber + "_Question_" + i, answers.get(0)); // question
+                            editor.commit();
+                            editor.putString("Attempt_" + AttemptNumber + "_CorrectAnswer_" + i, answers.get(1)); // correct answer
+                            editor.commit();
+                            editor.putString("Attempt_" + AttemptNumber + "_UserAnswer_" + i, answers.get(2)); // user answer
+                            editor.commit();
+                            editor.putString("Attempt_" + AttemptNumber + "_CorrectOrIncorrect_" + i, answers.get(3)); // Correct or Incorrect
+                            editor.commit();
+                            i++;
+                        }
+                        System.out.println(preferences.getString("Attempt_" + AttemptNumber + "_Question_" + 5,"Not Found"));
+                        editor.remove("AttemptNumber");
+                        editor.commit();
+                        editor.putInt("AttemptNumber",AttemptNumber+1);
+                        editor.commit();
+                        System.out.println(preferences.getInt("AttemptNumber",100));
+
+
                         if (((MainActivity) getActivity()).getNumberCorrect() >= 4){
                             ((MainActivity) getActivity()).createTextFrag();
                         }
@@ -135,6 +164,8 @@ public class QuestionsFragment extends Fragment {
                             // TODO freeze app
 
                         }
+                        ((MainActivity) getActivity()).NumberAnswered = 0;
+                        ((MainActivity) getActivity()).NumberCorrect = 0;
 
                     }
                     else{
@@ -182,7 +213,7 @@ public class QuestionsFragment extends Fragment {
         ArrayList<Character> operations = new ArrayList<Character>();
         ArrayList<Integer> numbers = new ArrayList<Integer>();
         // check difficulty, difficulty 1 = sober, difficulty 2 = drunk
-        int difficulty = 2;
+        //int difficulty = ;
         int numbersInEquation = 3;
         String equation = "";
         String urlName = "";
@@ -243,7 +274,7 @@ public class QuestionsFragment extends Fragment {
             urlName = urlName.replaceAll("/","%2F");
             return new Pair(equation,urlName);
         }
-            return new Pair("","");
+        return new Pair("","");
 
     }
 

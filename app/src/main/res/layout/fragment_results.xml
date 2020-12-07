@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Samantha Mathis & Jacob Hurley-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.noregrets.ResultsFragment">
+    android:layout_height="match_parent">
 
-    <TextView
+    <!-- To display the contacts from new message fragment-->
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Results Page" />
+        android:padding="10dp"
+        android:textSize="30dp"
+        android:id="@+id/result_list" />
 
 </LinearLayout>

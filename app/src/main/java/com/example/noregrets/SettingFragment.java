@@ -1,6 +1,9 @@
 package com.example.noregrets;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,18 +20,19 @@ import androidx.fragment.app.Fragment;
 public class SettingFragment extends Fragment {
 
     public SettingFragment() {
-        // Required empty public constructor
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_setting, container, false);
+        System.out.println(((MainActivity) getActivity()).difficulty);
         if (((MainActivity) getActivity()).difficulty == 1){
             RadioButton button = (RadioButton) v.findViewById(R.id.sober);
             button.setChecked(true);
         }
-        else{
+        else {
             RadioButton button = (RadioButton) v.findViewById(R.id.drunk);
             button.setChecked(true);
         }

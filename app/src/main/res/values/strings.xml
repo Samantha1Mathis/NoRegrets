@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Samantha Mathis & Jacob Hurley-->
+<?xml version="1.0" encoding="utf-8"?><!-- Samantha Mathis & Jacob Hurley-->
 <resources>
     <string name="app_name">NoRegrets</string>
     <string name="help">How To Use NoRegrets"\n"</string>
@@ -23,4 +22,6 @@
         you chose. Here it acts like a normal messaging app. Where you can send texts, images, or drawings.
         "\n\n" Enjoy and Stay Safe. "\n\n"
     </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
