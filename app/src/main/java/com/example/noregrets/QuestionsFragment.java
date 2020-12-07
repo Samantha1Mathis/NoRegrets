@@ -132,6 +132,7 @@ public class QuestionsFragment extends Fragment {
                     else{
                         sendQuestion.add("Incorrect");
                     }
+                    ((MainActivity) getActivity()).addAnswer(sendQuestion);
                     if (((MainActivity) getActivity()).getNumberAnswered() == 5){
                         // TODO add writing to internal storage
                         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(contextHolder);
@@ -166,6 +167,7 @@ public class QuestionsFragment extends Fragment {
                         }
                         ((MainActivity) getActivity()).NumberAnswered = 0;
                         ((MainActivity) getActivity()).NumberCorrect = 0;
+                        ((MainActivity) getActivity()).allAnswers.clear();
 
                     }
                     else{
