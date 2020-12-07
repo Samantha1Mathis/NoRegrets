@@ -6,9 +6,11 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.preference.PreferenceManager;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -27,6 +29,7 @@ public class SingleAttemptResult extends Fragment {
                              Bundle savedInstanceState) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         View v = inflater.inflate(R.layout.fragment_single_attempt_result, container, false);
+
         TextView title = (TextView)v.findViewById(R.id.AttemptNumber);
         title.setText(Integer.toString(attemptNumber));
         TextView QuestionAsked1 = (TextView)v.findViewById(R.id.QuestionAskedReplace1);
