@@ -49,30 +49,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="@id/outer"
-        app:layout_constraintRight_toLeftOf="@id/rotate"
+        app:layout_constraintRight_toRightOf="@id/outer"
         app:layout_constraintTop_toBottomOf="@id/answer"
         app:layout_constraintBottom_toBottomOf="@id/outer"
         android:onClick="submitClick"
         android:text="Submit"/>
 
 
-    <Button
-        android:id="@+id/rotate"
-        app:layout_constraintLeft_toRightOf="@id/submit"
-        app:layout_constraintRight_toRightOf="@id/outer"
-        app:layout_constraintTop_toBottomOf="@id/next"
-        app:layout_constraintBottom_toBottomOf="@id/outer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="Rotate" />
 
     <ImageView
         android:id="@+id/timer"
-        app:layout_constraintLeft_toRightOf="@id/outer"
-        app:layout_constraintRight_toRightOf="@id/outer"
-        app:layout_constraintTop_toBottomOf="@id/outer"
-        app:layout_constraintBottom_toBottomOf="@id/outer"
         android:layout_width="100dp"
         android:layout_height="100dp" />
 

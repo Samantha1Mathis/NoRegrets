@@ -1,16 +1,21 @@
 package com.example.noregrets;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.view.animation.Animation;
@@ -39,7 +44,6 @@ public class QuestionsFragment extends Fragment {
     public Activity containerActivity = null;
     private ArrayList<Integer> primeNumbers = new ArrayList<Integer>();
     private ArrayList<Character> mathSymbols = new ArrayList<Character>();
-    private Button rotate;
     private Button next;
     private Animation animRotate;
     private Animation animSlide;
@@ -50,6 +54,8 @@ public class QuestionsFragment extends Fragment {
     public int answer;
     private TextView questionView;
     private Context contextHolder;
+    private ImageView iv = null;
+
 
     public QuestionsFragment(String pref, int difficulty, Context context) {
         mathSymbols.add('+');
@@ -79,7 +85,6 @@ public class QuestionsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         this.v = inflater.inflate(R.layout.fragment_questions, container, false);
-        rotate = (Button) v.findViewById(R.id.rotate);
         next = (Button) v.findViewById(R.id.next);
 
         questionView = (TextView) v.findViewById(R.id.question);
@@ -97,7 +102,7 @@ public class QuestionsFragment extends Fragment {
 
 
         // Change BECAUSE ROTATE WILL BE DELTED
-        rotate.setOnClickListener(new View.OnClickListener() {
+        /*rotate.setOnClickListener(new View.OnClickListener() {
             private ImageView iv = v.findViewById(R.id.timer);
             @Override
             public void onClick(View v) {
@@ -111,10 +116,11 @@ public class QuestionsFragment extends Fragment {
                         R.anim.rotate);
                 this.iv.startAnimation(animRotate);
             }
-        });
+        });*/
         // Change to make questions
         next.setOnClickListener(new View.OnClickListener() {
             //private TextView tx = v.findViewById(R.id.question);
+            private ImageView iv = v.findViewById(R.id.timer);
             @Override
             public void onClick(View v) {
                 int input = 0;
@@ -157,12 +163,23 @@ public class QuestionsFragment extends Fragment {
                         editor.commit();
                         System.out.println(preferences.getInt("AttemptNumber",100));
 
-
                         if (((MainActivity) getActivity()).getNumberCorrect() >= 4){
                             ((MainActivity) getActivity()).createTextFrag();
                         }
                         else{
-                            // TODO freeze app
+                            if (pref.equals("LIGHT")) {
+                                iv.setImageDrawable(getResources().getDrawable(R.drawable.timerblack));
+                            }else{
+                                iv.setImageDrawable(getResources().getDrawable(R.drawable.timerwhite));
+
+                            }
+                            animRotate = AnimationUtils.loadAnimation(containerActivity,
+                                    R.anim.rotate);
+                            iv.startAnimation(animRotate);
+
+
+                            //Freeze the app if got it wrong
+
 
                         }
                         ((MainActivity) getActivity()).NumberAnswered = 0;
@@ -182,6 +199,7 @@ public class QuestionsFragment extends Fragment {
         });
         return v;
     }
+
 
     /**
      * checks if a number is a prime number
