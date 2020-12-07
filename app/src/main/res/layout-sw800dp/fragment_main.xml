@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Samantha Mathis & Jacob Hurley-->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -6,7 +8,6 @@
     tools:context="com.example.noregrets.MainFragment"
     android:id="@+id/outer"
     android:orientation="vertical">
-
 
     <Button
         android:id="@+id/setting"

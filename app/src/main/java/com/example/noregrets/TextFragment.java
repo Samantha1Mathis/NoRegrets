@@ -5,31 +5,36 @@ import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.ArrayAdapter;
-
 import android.widget.ListView;
-
-
 import androidx.fragment.app.Fragment;
-
 import java.util.ArrayList;
 
+/*
+ * @author: Samantha Mathis, Jacob Hurley
+ * @class: CSC 317
+ * @description: This is the text fragment which displays the previous conversations
+ * the user has stored in their phone, each are clickable to continue messaging the specified contact
+ * or to create a new conversation with another contact
+ */
 public class TextFragment extends Fragment {
-
     private Activity containerActivity = null;
     private View v = null;
-
     private ListView messagesListView;
-    ArrayAdapter<String> messagesAdapter = null;
+    private ArrayAdapter<String> messagesAdapter = null;
     private ArrayList<String> messages = new ArrayList<String>();
 
     public TextFragment() { }
 
+    /**
+     * PURPOSE: This method connects this fragment
+     * to the activity that created it
+     *
+     * @param containerActivity, which would be MainActivity
+     */
     public void setContainerActivity(Activity containerActivity) {
         this.containerActivity = containerActivity;
     }
@@ -43,23 +48,33 @@ public class TextFragment extends Fragment {
         return v;
     }
 
+    /**
+     * PURPOSE: This method calls the getContact method
+     * @param savedInstance
+     */
     @Override
     public void onCreate(Bundle savedInstance){
         super.onCreate(savedInstance);
         getContacts();
     }
 
+    /**
+     * PURPOSE: This method adds all the contacts to an array adapter
+     * to be displayed for the user to select a previous conversation
+     */
     @Override
     public void onResume() {
         super.onResume();
         setupContactsAdapter();
     }
 
+    /**
+     * PURPOSE: This method adds all the previous conversations the user has stored,
+     * along with the contact name or phone number
+     */
     public void getContacts() {
-
         ContentResolver contentResolver = getActivity().getContentResolver();
         Uri uri = Uri.parse("content://mms-sms/conversations/");
-        //Uri uri = Uri.parse("content://sms/inbox");
         Cursor query = contentResolver.query(uri,
                 new String[]{"_id", "ct_t", "thread_id", "address"},
                 null, null, null);
@@ -74,7 +89,10 @@ public class TextFragment extends Fragment {
         query.close();
     }
 
-
+    /**
+     * PURPOSE: This method sets up the message adapter
+     * to display the conversations the user has.
+     */
     private void setupContactsAdapter() {
         messagesListView = containerActivity.findViewById(R.id.contact_list_view);
         messagesAdapter = new

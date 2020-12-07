@@ -2,9 +2,7 @@ package com.example.noregrets;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Pair;
@@ -19,10 +17,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.annotation.RequiresApi;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -38,17 +34,17 @@ public class QuestionsFragment extends Fragment {
     public Activity containerActivity = null;
     private ArrayList<Integer> primeNumbers = new ArrayList<Integer>();
     private ArrayList<Character> mathSymbols = new ArrayList<Character>();
-    Button rotate;
-    Button next;
-    ImageView iv;
-    Animation animRotate;
-    Animation animSlide;
-    View v = null;
-    String pref = "";
-    EditText answerQuestion;
+    private Button rotate;
+    private Button next;
+    private Animation animRotate;
+    private Animation animSlide;
+    private View v = null;
+    private String pref = "";
+    private EditText answerQuestion;
     public String question = "";
     public int answer;
-    TextView questionView;
+    private TextView questionView;
+
     public QuestionsFragment(String pref) {
         mathSymbols.add('+');
         mathSymbols.add('-');
@@ -61,7 +57,12 @@ public class QuestionsFragment extends Fragment {
         this.pref = pref;
 
     }
-
+    /**
+     * PURPOSE: This method connects this fragment
+     * to the activity that created it
+     *
+     * @param containerActivity, which would be MainActivity
+     */
     public void setContainerActivity(Activity containerActivity) {
         this.containerActivity = containerActivity;
     }
@@ -69,23 +70,19 @@ public class QuestionsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-            this.v = inflater.inflate(R.layout.fragment_questions, container, false);
-            rotate = (Button) v.findViewById(R.id.rotate);
-            next = (Button) v.findViewById(R.id.next);
+        this.v = inflater.inflate(R.layout.fragment_questions, container, false);
+        rotate = (Button) v.findViewById(R.id.rotate);
+        next = (Button) v.findViewById(R.id.next);
 
-        //View v = inflater.inflate(R.layout.fragment_questions, container, false);
         questionView = (TextView) v.findViewById(R.id.question);
         questionView.setText(question);
         answerQuestion = (EditText) v.findViewById(R.id.answer);
 
         int width = (((MainActivity)getActivity()).metrics.widthPixels)/70;
         answerQuestion.setEms((int) width);
-        // Inflate the layout for this fragment
-        //return v;
 
 
-
-        // Rotate
+        // Change BECAUSE ROTATE WILL BE DELTED
         rotate.setOnClickListener(new View.OnClickListener() {
             private ImageView iv = v.findViewById(R.id.timer);
             @Override
@@ -101,7 +98,7 @@ public class QuestionsFragment extends Fragment {
                 this.iv.startAnimation(animRotate);
             }
         });
-        // Slide
+        // Change to make questions -- Slide
         next.setOnClickListener(new View.OnClickListener() {
             //private TextView tx = v.findViewById(R.id.question);
             @Override
