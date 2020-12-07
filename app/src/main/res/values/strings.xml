@@ -14,7 +14,8 @@
         It will show your past 20 questions that you have answered and whether you answered correctly.
         "\n\n" Once you have set up your customizations you may go back to the home page and begin. "\n\n"
         You will be sent to a page with a question you must answer the question,  You will be given a set
-        of five questions, if you miss more than one question then a timer will appear and you must
+        of five questions, You must answer with an integer or else nothing will happen.
+        if you miss more than one question then a timer will appear and you must
         wait out the time before trying again. "\n\n" Once you have answered at least four questions
         correctly it will direct you to a list of your previous conversations, you may click on one of those
         or click the new message button. "\n\n" The new message will direct you to a list of your contacts where

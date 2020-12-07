@@ -33,17 +33,21 @@ import java.io.File;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
-
+/*
+ * @author: Samantha Mathis, Jacob Hurley
+ * @class: CSC 317
+ * @description: This is the main activity which implements each of
+ * the fragments to be initialized.
+ */
 public class MainActivity extends AppCompatActivity {
-    MessageFragment messageFragment = null;
-    String phone="";
-    String pref = TASKS_THEME;
-    double xInches = 0.0;
-    double yInches = 0.0;
-    DisplayMetrics metrics = new DisplayMetrics();
+    public int difficulty;
+    private MessageFragment messageFragment = null;
+    private String phone="";
+    private String pref = TASKS_THEME;
+    public DisplayMetrics metrics = new DisplayMetrics();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +60,11 @@ public class MainActivity extends AppCompatActivity {
         permission();
     }
 
+    /**
+     * PURPOSE: This method checks to make sure
+     * the user has enabled all necessary permission
+     * needed for the app -- Needs to be after API 23
+     */
     public void permission() {
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED
@@ -81,7 +90,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * PURPOSE: This method is started if not all the permissions are enabled. It
+     * creates a pop up window for the user to easily enable the permissions that
+     * were denied
+     * @param requestCode, The request code to allow the pop up to activate
+     * @param permissions, The list of permissions needed to be allowed
+     * @param grantResults, The list of granted results to see if the permission
+     *                      was allowed
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         for (int i = 0; i < permissions.length; i++){
@@ -92,41 +109,65 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-    /**
-     * @return true if the screen is larger than 5 by 5 inches, fale otherwise
-     */
-    private boolean isBigScreen() {
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        this.xInches = (((float)this.metrics.widthPixels) / metrics.xdpi);
-        this.yInches = (((float)this.metrics.widthPixels) / metrics.xdpi);
-        return xInches > 5.0 && yInches > 5.0;
-    }
 
+    /**
+     * PURPOSE: To call the method to create the settings fragment
+     * @param v, the view where the button was clicked
+     */
     public void settingClick(View v){
         createSettingFrag();
     }
+    /**
+     * PURPOSE: To call the method to create the help fragment
+     * @param v, the view where the button was clicked
+     */
     public void helpClick(View v){
         createHelpFrag();
     }
+    /**
+     * PURPOSE: To call the method to create the results fragment
+     * @param v, the view where the button was clicked
+     */
     public void resultsClick(View v){
         createResultsFrag();
     }
+
+    /**
+     * PURPOSE: To call the method to create the questions fragment,
+     * to start the questions
+     * @param v, the view where the button was clicked
+     */
     public void beginClick(View v){
         createQuestFrag();
     }
-
+    /**
+     * PURPOSE: To call the method to create another instance of
+     * the questions fragment
+     * @param v, the view where the button was clicked
+     */
     public void nextClick(View v){
         createQuestFrag();
     }
 
+    /**
+     * Needs to be deleted
+     * */
     public void submitClick(View v){
         createTextFrag();
     }
 
+    /**
+     * PURPOSE: To call the method to create the new message fragment
+     * @param v, the view where the button was clicked
+     */
     public void newClick(View v){
         createNewMessageFrag();
     }
 
+    /**
+     * PURPOSE: To create the main display of the app
+     * when it is first launched
+     */
     public void createMainFrag(){
         MainFragment displayFragment = new MainFragment();
         Bundle args = new Bundle();
@@ -134,12 +175,16 @@ public class MainActivity extends AppCompatActivity {
         displayFragment.setArguments(args);
         FragmentTransaction transaction =
                 getSupportFragmentManager().beginTransaction();
-        //displayFragment.setContainerActivity(this);
         transaction.replace(R.id.outer,
                 displayFragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
+    /**
+     * PURPOSE: To create the settings fragment
+     * to display the layout of the settings page
+     */
     public void createSettingFrag(){
         SettingFragment settingFragment = new SettingFragment();
         Bundle args = new Bundle();
@@ -147,13 +192,16 @@ public class MainActivity extends AppCompatActivity {
         settingFragment.setArguments(args);
         FragmentTransaction transaction =
                 getSupportFragmentManager().beginTransaction();
-        //settingFragment.setContainerActivity(this);
         transaction.replace(R.id.outer,
                 settingFragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
 
+    /**
+     * PURPOSE: To create the help fragment
+     * to display the layout of the help page
+     */
     public void createHelpFrag(){
         HelpFragment helpFragment = new HelpFragment();
         Bundle args = new Bundle();
@@ -161,13 +209,16 @@ public class MainActivity extends AppCompatActivity {
         helpFragment.setArguments(args);
         FragmentTransaction transaction =
                 getSupportFragmentManager().beginTransaction();
-        //helpFragment.setContainerActivity(this);
         transaction.replace(R.id.outer,
                 helpFragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
 
+    /**
+     * PURPOSE: To create the results fragment
+     * to display the layout of the results page
+     */
     public void createResultsFrag(){
         ResultsFragment resultsFragment = new ResultsFragment();
         Bundle args = new Bundle();
@@ -175,16 +226,18 @@ public class MainActivity extends AppCompatActivity {
         resultsFragment.setArguments(args);
         FragmentTransaction transaction =
                 getSupportFragmentManager().beginTransaction();
-        //resultsFragment.setContainerActivity(this);
         transaction.replace(R.id.outer,
                 resultsFragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
 
+    /**
+     * PURPOSE: To create the questions fragment
+     * to display the layout of the questions page
+     */
     public void createQuestFrag(){
-        System.out.println("!!!" + pref);
-        QuestionsFragment questFragment = new QuestionsFragment(pref, difficulty);
+        QuestionsFragment questFragment = new QuestionsFragment(pref);
         Bundle args = new Bundle();
 
         questFragment.setArguments(args);
@@ -196,6 +249,12 @@ public class MainActivity extends AppCompatActivity {
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
+    /**
+     * PURPOSE: To create the text fragment
+     * to display the layout of the conversations
+     * that the user can choose to text
+     */
     public void createTextFrag(){
         TextFragment textFragment = new TextFragment();
         Bundle args = new Bundle();
@@ -209,6 +268,12 @@ public class MainActivity extends AppCompatActivity {
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
+    /**
+     * PURPOSE: To create the new message fragment
+     * to display the layout of when the user
+     * wants to create a new message
+     */
     public void createNewMessageFrag(){
         NewMessageFragment newMessageFragment = new NewMessageFragment();
         Bundle args = new Bundle();
@@ -223,11 +288,17 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    /**
+     * PURPOSE: To create the message fragment
+     * to display the layout of the messaging portion
+     * of the app
+     * @param name, the name of the recipient
+     * @param phone, the phone number of the recipient
+     */
     public void createMessageFrag(String name, String phone){
         this.phone = phone;
         this.messageFragment = new MessageFragment(name, phone);
         Bundle args = new Bundle();
-        //args.putString("display_text", displayText);
         this.messageFragment.setArguments(args);
         FragmentTransaction transaction =
                 getSupportFragmentManager().beginTransaction();
@@ -237,10 +308,17 @@ public class MainActivity extends AppCompatActivity {
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
+    //Portion to enable different themes
     private static final String TASKS_THEME = "THEME";
     private static final String THEME_DARK = "DARK";
     private static final String THEME_LIGHT = "LIGHT";
 
+    /**
+     * PURPOSE: To have the users preference of light or dark
+     * mode saved, in order to keep it the same theme
+     * every time they go back to the app
+     */
     public void setTheme() {
         SharedPreferences sharedPrefs = this.getPreferences(Context.MODE_PRIVATE);
         if (sharedPrefs.getString(TASKS_THEME, THEME_LIGHT).equals(THEME_LIGHT)) {
@@ -252,16 +330,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-
+    /**
+     * PURPOSE: To update the theme based on when the
+     * user clicks the button to switch between the two themes
+     * @param v, the view where the button was clicked
+     */
     public void toggleTheme(View v) {
         SharedPreferences sharedPrefs = this.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPrefs.edit();
         String theme  = sharedPrefs.getString(TASKS_THEME, THEME_LIGHT);
         if (theme.equals(THEME_LIGHT)) {
             editor.putString(TASKS_THEME, THEME_DARK);
-
-
         } else {
             editor.putString(TASKS_THEME, THEME_LIGHT);
         }
@@ -269,29 +348,39 @@ public class MainActivity extends AppCompatActivity {
         recreate();
     }
 
+    /**
+     * PURPOSE: TO change the type of questions depending
+     * on which radio button was selected
+     * @param view, the view where the radio was selected
+     */
     public void onRadioButtonClicked(View view) {
         //Determines which answer was picked
         boolean checked = ((RadioButton) view).isChecked();
         if (view.getId() == R.id.sober) {
             if (checked) {
-                difficulty = 1;
+                //do something
             }
         }
         if (view.getId() == R.id.drunk) {
             if (checked) {
-                difficulty = 2;
+                //do something
             }
         }
 
     }
 
+    // Portion to enable images
     private static final int REQUEST_TAKE_PHOTO = 1;
-    private ImageView mostPicture = null;
     private String currentPhotoPath = "";
 
+    /**
+     * PURPOSE: This method creates the intent to open
+     * the camera, then saves the image to a file inorder be send
+     * and added to the layout
+     * @param view, the view of the button was clicked
+     */
     public void takePhoto (View view){
         //gets which picture was clicked in order to know where to place the new picture
-        //mostPicture = (ImageView)findViewById(R.id.image);
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             File photoFile = null;
@@ -312,6 +401,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * PURPOSE: This method creates a file for an image
+     * @return the file for the image
+     * @throws IOException
+     */
     public File createImageFile () throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
@@ -321,40 +415,51 @@ public class MainActivity extends AppCompatActivity {
         return image;
     }
 
-
+    /**
+     * PURPOSE: This method is called by the takePicture method in order to
+     * start the intent to open the camera. It creates a bitmap sends
+     * that file to the sendImageIntent method
+     * @param requestCode, code to match it allow the the camera to open
+     * @param data, data which is the intent (in this case the takeImage intent
+     */
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
             BitmapFactory.Options bmOptions = new BitmapFactory.Options();
             Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
-
             //Re-figures the image to be a square
             int size = Math.min(bitmap.getWidth(), bitmap.getHeight());
             Bitmap resized = Bitmap.createBitmap(bitmap, 0, 0, size, size);
-            //mostPicture.setImageBitmap(resized);
             addImage(resized);
             File file = new File(currentPhotoPath);
-            System.out.println(file);
             sendImageIntent(file);
         }
     }
 
+    /**
+     * PURPOSE: This method adds the image that was taken, selected
+     * or drawn to a layout to be displayed in the message fragment.
+     * @param bitmap, the bitmap of the image being added
+     */
     public void addImage(Bitmap bitmap){
         ImageView iv = new ImageView(this);
         LinearLayout ll = findViewById(R.id.image);
         iv.setImageBitmap(bitmap);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(300, 100);
         lp.setMargins(20, 20, 20, 20);
-
         iv.setLayoutParams(lp);
-
         ll.addView(iv);
 
     }
 
-    public void sendImageIntent(File file){
-        System.out.println(file);
 
+    /**
+     * PURPOSE: This method sends the image file as an intent
+     * to be sent through message app (MMS doesn't send through
+     * emulators)
+     * @param file, the file that contains the image being sent
+     */
+    public void sendImageIntent(File file){
         Uri uri = FileProvider.getUriForFile(this,
                 "com.example.noregrets.fileprovider", file);
         if (!this.address.equals("")){
@@ -368,9 +473,7 @@ public class MainActivity extends AppCompatActivity {
         smsIntent.setType("image/jpeg");
         startActivity(smsIntent);
     }
-    public void draw(View v){
 
-    }
     /**
      * PURPOSE: This method get initialized by the clear button then it
      * calls the clear drawing method from the fragment
@@ -379,33 +482,31 @@ public class MainActivity extends AppCompatActivity {
 
         messageFragment.clearDrawing(v);
     }
+    // Contains the phone number of the recipient
+    private String address;
 
-    String address;
+    /**
+     * PURPOSE: This method gets previous messages send back and forth
+     * from the contact that the user wants to send messages to.
+     * It separates messages between which person sent what to be easily
+     * distinguished
+     * @param v, the view of which button was clicked
+     * @return, a string that contains all the message data
+     */
     public String getConversationInfo(View v) {
         String text = ((TextView)v).getText().toString();
         String thread_id = text.substring(text.indexOf(" :: ") + 4);
         this.address = text.substring(text.indexOf(" || ") + 4, text.indexOf(" :: "));
         String displayText = "";
-        //displayText += "Conversation with " + address + "\n\n\n";
 
         Uri uriSMSURI = Uri.parse("content://sms/");
         Cursor cur = getContentResolver().query(uriSMSURI, null, "thread_id=" + thread_id, null, null);
         while (cur.moveToNext()){
-            //Available columns: [_id, thread_id, address, person, date, date_sent, protocol, read, status,
-            // type, reply_path_present, subject, body, service_center, locked, sub_id, error_code, creator, seen]
             String type = cur.getString(cur.getColumnIndexOrThrow("type"));
-            /*System.out.println(cur.getString(cur.getColumnIndexOrThrow("creator")) + " : " +
-                    cur.getString(cur.getColumnIndexOrThrow("person")) + " : " +
-                    cur.getString(cur.getColumnIndexOrThrow("thread_id")) + " : " +
-                    cur.getString(cur.getColumnIndexOrThrow("protocol")) + " : " +
-                    cur.getString(cur.getColumnIndexOrThrow("sub_id")) + " : " +
-                    cur.getString(cur.getColumnIndexOrThrow("reply_path_present")) + " : " +
-                    cur.getString(cur.getColumnIndexOrThrow("type")) + " : " +
-                    cur.getString(cur.getColumnIndexOrThrow("status")));*/
             this.phone = cur.getString(cur.getColumnIndexOrThrow("address"));
             String name ="";
             if (Integer.parseInt(type) == 1){
-                 name = getContactName(phone, this);
+                name = getContactName(phone, this);
             } else{
                 name = "me";
             }
@@ -416,15 +517,19 @@ public class MainActivity extends AppCompatActivity {
         cur.close();
         return displayText;
     }
+
+    /**
+     * PURPOSE: To grab the contact name to be displayed when given the phone number
+     * @param phoneNumber, the phone number we are trying to match with a name from the contacts
+     * @param context, the main activity
+     * @return, a string with the contact's name
+     */
     public String getContactName(final String phoneNumber, Context context)
     {
         Uri uri=Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI,Uri.encode(phoneNumber));
-
         String[] projection = new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME};
-
         String contactName="";
         Cursor cursor=context.getContentResolver().query(uri,projection,null,null,null);
-
         if (cursor != null) {
             if(cursor.moveToFirst()) {
                 contactName=cursor.getString(0);
@@ -437,6 +542,12 @@ public class MainActivity extends AppCompatActivity {
         return contactName;
     }
 
+    /**
+     * PURPOSE: THis method allows users to send texts through NoRegrets
+     * and have them show up on android's original messaging app. Creates
+     * an SMS MANAGER to send the texts
+     * @param message, the message the user wants to send.
+     */
     public void sendSMSMessage(String message) {
         try {
             SmsManager smsManager = SmsManager.getDefault();
@@ -447,6 +558,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * PURPOSE: This method grabs the info from the other methods,
+     * to grab the conversations from the specified recipient, and
+     * creates the message fragment with the address the user wants to message
+     * @param v
+     */
     public void onInfoClick(View v) {
         String name= "Number: ";
         String displayText = "";
@@ -465,25 +582,5 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
-    public int NumberAnswered = 0;
-    public int getNumberAnswered(){
-        return NumberAnswered;
-    }
-
-    public int NumberCorrect = 0;
-    public int getNumberCorrect(){
-        return NumberCorrect;
-    }
-
-    public int difficulty = 1;
-
-    private ArrayList<ArrayList<String>> allAnswers = new ArrayList<>();
-    public void addAnswer(ArrayList<String> singleQuestion){  // single question is in the format QUESTION, ANSWER, USERASNWER, CORRECT(right or wrong)
-        if (singleQuestion.size() == 4){
-            allAnswers.add(singleQuestion);
-        }
-    }
-
 
 }

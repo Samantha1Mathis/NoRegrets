@@ -2,9 +2,7 @@ package com.example.noregrets;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Pair;
@@ -19,10 +17,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.annotation.RequiresApi;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -40,7 +36,6 @@ public class QuestionsFragment extends Fragment {
     private ArrayList<Character> mathSymbols = new ArrayList<Character>();
     private Button rotate;
     private Button next;
-    private ImageView iv;
     private Animation animRotate;
     private Animation animSlide;
     private View v = null;
@@ -49,23 +44,19 @@ public class QuestionsFragment extends Fragment {
     public String question = "";
     public int answer;
     private TextView questionView;
-    private int difficulty = 1;
 
-
-    public QuestionsFragment(String pref, int difficulty) {
+    public QuestionsFragment(String pref) {
         mathSymbols.add('+');
         mathSymbols.add('-');
         mathSymbols.add('*');
         mathSymbols.add('/');
 
-        this.difficulty = difficulty;
         Pair<String, String> equation = createEquation();
         question = equation.first;
         new answerSearch().execute(equation.second);
         this.pref = pref;
 
     }
-
     /**
      * PURPOSE: This method connects this fragment
      * to the activity that created it
@@ -75,7 +66,6 @@ public class QuestionsFragment extends Fragment {
     public void setContainerActivity(Activity containerActivity) {
         this.containerActivity = containerActivity;
     }
-
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,8 +76,13 @@ public class QuestionsFragment extends Fragment {
 
         questionView = (TextView) v.findViewById(R.id.question);
         questionView.setText(question);
+        answerQuestion = (EditText) v.findViewById(R.id.answer);
 
-        // Rotate
+        int width = (((MainActivity)getActivity()).metrics.widthPixels)/70;
+        answerQuestion.setEms((int) width);
+
+
+        // Change BECAUSE ROTATE WILL BE DELTED
         rotate.setOnClickListener(new View.OnClickListener() {
             private ImageView iv = v.findViewById(R.id.timer);
             @Override
@@ -103,50 +98,17 @@ public class QuestionsFragment extends Fragment {
                 this.iv.startAnimation(animRotate);
             }
         });
-        // Slide
+        // Change to make questions -- Slide
         next.setOnClickListener(new View.OnClickListener() {
+            //private TextView tx = v.findViewById(R.id.question);
             @Override
             public void onClick(View v) {
-                int input = 0;
-                try{
-                    input = Integer.parseInt(answerQuestion.getText().toString());
-                    ArrayList<String> sendQuestion = new ArrayList<String>();
-                    sendQuestion.add(question);
-                    sendQuestion.add(Integer.toString(answer));
-                    sendQuestion.add(answerQuestion.getText().toString());
-                    ((MainActivity) getActivity()).NumberAnswered +=1;
-                    if (input == answer){
-                        ((MainActivity) getActivity()).NumberCorrect +=1;
-                        sendQuestion.add("Correct");
-                    }
-                    else{
-                        sendQuestion.add("Incorrect");
-                    }
-                    if (((MainActivity) getActivity()).getNumberAnswered() == 5){
-                        // TODO add writing to internal storage
-                        if (((MainActivity) getActivity()).getNumberCorrect() >= 4){
-                            ((MainActivity) getActivity()).createTextFrag();
-                        }
-                        else{
-                            // TODO freeze app
+                animSlide = AnimationUtils.loadAnimation(containerActivity,
+                        R.anim.slide);
 
-                        }
+                questionView.startAnimation(animSlide);
 
-                    }
-                    else{
-
-                        ((MainActivity)getActivity()).nextClick(v);
-                    }
-                } catch (NumberFormatException e) {
-
-                }
-
-                //animSlide = AnimationUtils.loadAnimation(containerActivity,
-                       // R.anim.slide);
-
-                //questionView.startAnimation(animSlide);
-
-
+               // ((MainActivity)getActivity()).nextClick(v);
 
             }
         });
@@ -185,7 +147,7 @@ public class QuestionsFragment extends Fragment {
         ArrayList<Character> operations = new ArrayList<Character>();
         ArrayList<Integer> numbers = new ArrayList<Integer>();
         // check difficulty, difficulty 1 = sober, difficulty 2 = drunk
-        //int difficulty = ;
+        int difficulty = 2;
         int numbersInEquation = 3;
         String equation = "";
         String urlName = "";

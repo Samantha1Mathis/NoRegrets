@@ -11,7 +11,7 @@
 
     <TextView
         android:id="@+id/question"
-        android:textSize="45dp"
+        android:textSize="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="@id/outer"
@@ -36,7 +36,7 @@
     <Button
         android:id="@+id/next"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:text="Next"
         android:layout_marginTop="10dp"
         app:layout_constraintBottom_toTopOf="@id/submit"
