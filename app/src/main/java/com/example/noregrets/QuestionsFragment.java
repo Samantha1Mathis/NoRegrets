@@ -78,6 +78,12 @@ public class QuestionsFragment extends Fragment {
 
         questionView = (TextView) v.findViewById(R.id.question);
         questionView.setText(question);
+
+        //Slide animation to slide in the questions
+        animSlide = AnimationUtils.loadAnimation(containerActivity,
+                R.anim.slide);
+        questionView.startAnimation(animSlide);
+
         answerQuestion = (EditText) v.findViewById(R.id.answer);
 
         int width = (((MainActivity)getActivity()).metrics.widthPixels)/70;
@@ -100,7 +106,7 @@ public class QuestionsFragment extends Fragment {
                 this.iv.startAnimation(animRotate);
             }
         });
-        // Change to make questions -- Slide
+        // Change to make questions
         next.setOnClickListener(new View.OnClickListener() {
             //private TextView tx = v.findViewById(R.id.question);
             @Override

@@ -18,6 +18,8 @@ import android.provider.MediaStore;
 import android.telephony.gsm.SmsManager;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -237,6 +239,7 @@ public class MainActivity extends AppCompatActivity {
      * to display the layout of the questions page
      */
     public void createQuestFrag(){
+
         QuestionsFragment questFragment = new QuestionsFragment(pref);
         Bundle args = new Bundle();
 
