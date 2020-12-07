@@ -1,6 +1,5 @@
 package com.example.noregrets;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,15 +7,15 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
-
+/*
+ * @author: Samantha Mathis, Jacob Hurley
+ * @class: CSC 317
+ * @description: This is the main fragment which displays the app title
+ * and buttons to go to settings, help page or to begin the process
+ */
 public class MainFragment extends Fragment {
-    public Activity containerActivity = null;
     public MainFragment() {
         // Required empty public constructor
-    }
-
-    public void setContainerActivity(Activity containerActivity) {
-        this.containerActivity = containerActivity;
     }
 
     @Override

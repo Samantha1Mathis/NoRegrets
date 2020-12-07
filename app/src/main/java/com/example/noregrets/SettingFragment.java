@@ -1,6 +1,5 @@
 package com.example.noregrets;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,14 +8,16 @@ import android.widget.RadioButton;
 
 import androidx.fragment.app.Fragment;
 
+/*
+ * @author: Samantha Mathis, Jacob Hurley
+ * @class: CSC 317
+ * @description: This is the settings fragment which allows the user to click to
+ * see their statistics, change the theme of the app and set the difficulty of the questions
+ */
 public class SettingFragment extends Fragment {
-    public Activity containerActivity = null;
 
     public SettingFragment() {
         // Required empty public constructor
-    }
-    public void setContainerActivity(Activity containerActivity) {
-        this.containerActivity = containerActivity;
     }
 
     @Override

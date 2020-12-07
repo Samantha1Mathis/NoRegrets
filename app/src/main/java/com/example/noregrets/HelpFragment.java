@@ -1,6 +1,5 @@
 package com.example.noregrets;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,17 +7,17 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+/*
+ * @author: Samantha Mathis, Jacob Hurley
+ * @class: CSC 317
+ * @description: This Fragment displays instructions on how to use
+ * the app
+ */
 public class HelpFragment extends Fragment {
-    public Activity containerActivity = null;
-
-
     public HelpFragment() {
         // Required empty public constructor
     }
 
-    public void setContainerActivity(Activity containerActivity) {
-        this.containerActivity = containerActivity;
-    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

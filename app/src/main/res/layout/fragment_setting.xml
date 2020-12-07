@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Samantha Mathis & Jacob Hurley-->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,7 +9,6 @@
     tools:context="com.example.noregrets.SettingFragment"
     android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -81,10 +82,4 @@
             android:textSize="25dp" />
 
     </RadioGroup>
-
-
-
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

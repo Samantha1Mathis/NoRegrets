@@ -12,27 +12,21 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
 
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.method.ScrollingMovementMethod;
 import android.util.AttributeSet;
-import android.util.TypedValue;
+
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
@@ -42,10 +36,19 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
+
+/*
+ * @author: Samantha Mathis, Jacob Hurley
+ * @class: CSC 317
+ * @description: This is the message fragment which has all the
+ * necessary elements to perform like a regular messaging app. It allows
+ * the user to scroll through old messages, send texts, images (by opening up
+ * the camera or gallery) or even drawing a picture for the recipient with a color
+ * wheel to choose which color the paint is
+ */
 public class MessageFragment extends Fragment {
     private static final int RESULT_OK = -1;
     public Activity containerActivity = null;
@@ -53,26 +56,32 @@ public class MessageFragment extends Fragment {
     public String phone = "";
     private DrawingView dv = null;
     private int paintColor = Color.RED;
-    String picturePath ="";
-    View v = null;
-    Button send;
-    Button draw;
-    Button photo;
-    EditText txtMessage;
-    Button colorPicker;
-    int seekBarValue =0;
-    SeekBar seekBar;
-    //public Activity imagesActivity = null;
-    //private ListView imagesListView;
-    //private ArrayAdapter<Bitmap> imagesAdapter = null;
-    //private ArrayList<Bitmap> images = new ArrayList<Bitmap>();
+    private View v = null;
+    private Button send;
+    private Button draw;
+    private Button photo;
+    private EditText txtMessage;
+    private Button colorPicker;
+    private int seekBarValue =0;
+    private SeekBar seekBar;
 
+    /**
+     * PURPOSE: Initializes the fragment with the name and phone number of
+     * the recipient.
+     * @param name, Name of the recipient
+     * @param phone, Phone number attached with the name
+     */
     public MessageFragment(String name, String phone) {
         this.name = name;
         this.phone = phone;
 
     }
-
+    /**
+     * PURPOSE: This method connects this fragment
+     * to the activity that created it
+     *
+     * @param containerActivity, which would be MainActivity
+     */
     public void setContainerActivity(Activity containerActivity) {
         this.containerActivity = containerActivity;
     }
@@ -85,29 +94,40 @@ public class MessageFragment extends Fragment {
                              Bundle savedInstanceState) {
         this.v =  inflater.inflate(R.layout.fragment_message, container, false);
         String displayText = getArguments().getString("display_text");
+
+        //Allows message to be scrollable
         TextView tv2 = v.findViewById(R.id.messages);
         tv2.setText(displayText);
         tv2.setMovementMethod(new ScrollingMovementMethod());
+
+        //Grabs the name of the user
         TextView tv = v.findViewById(R.id.name);
         String name = ((MainActivity)getActivity()).getContactName(this.phone, containerActivity);
         tv.setText(name);
+
+        // Creates objects inorder to set up onClick methods
         send = (Button) v.findViewById(R.id.send);
         draw = (Button) v.findViewById(R.id.draw);
         photo = (Button) v.findViewById(R.id.photo);
         colorPicker = (Button) v.findViewById(R.id.color);
         txtMessage = (EditText) v.findViewById(R.id.current);
-        int width = (((MainActivity)getActivity()).metrics.widthPixels)/70;
 
+        //Sets up message length based on width of device
+        int width = (((MainActivity)getActivity()).metrics.widthPixels)/70;
         txtMessage.setEms((int) width);
 
+        // When the send button is clicked it activates the sendSMS method from
+        // the main activity
         send.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String message = txtMessage.getText().toString();
 
                 ((MainActivity)getActivity()).sendSMSMessage(message);
-                //txtMessage.getText().clear();
+
             }
         });
+
+        // When the draw button is clicked it activates the screenshot method
         draw.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {
@@ -118,23 +138,29 @@ public class MessageFragment extends Fragment {
                 }
             }
         });
-        photo.setOnClickListener(new View.OnClickListener(){
 
+        //When the photo button is clicked it activates an intent to open
+        // the gallery to scroll through pictures
+        photo.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(i, RESULT_LOAD_IMAGE);
 
             }
          });
+
+        //When the color button is clicked it calls the setColor method
         colorPicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setColor();
             }
         });
-        seekBar=(SeekBar)v.findViewById(R.id.stroke); // initiate the Seek bar
 
-        seekBar.getProgress(); // get progress value from the Seek bar
+        seekBar = (SeekBar)v.findViewById(R.id.stroke);
+        seekBar.getProgress();
+
+        // When the seekbar is moved it calls the changeSize method to change the stroke width
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -150,15 +176,22 @@ public class MessageFragment extends Fragment {
 
             }
         });
+
+        //Creates a DrawingView object from the main class
         dv = new DrawingView(containerActivity, null);
         dv.setupDrawing();
 
+        //adds it to the view on the layout
         LinearLayout ll = v.findViewById(R.id.drawing);
         ll.addView(dv);
         return v;
     }
 
-
+    /**
+     * PURPOSE: This method takes a screenshot of the drawing layout
+     * inorder to send it to the recipient
+     * @throws IOException
+     */
     public void screenShot() throws IOException {
         View view = this.v.findViewById(R.id.drawing);
 
@@ -180,18 +213,19 @@ public class MessageFragment extends Fragment {
         OutputStream os = new BufferedOutputStream(new FileOutputStream(file));
         bitmap.compress(Bitmap.CompressFormat.PNG, 10, os);
         os.close();
-        //((MainActivity)getActivity()).shareImage(file);
         ((MainActivity)getActivity()).sendImageIntent(file);
-        //ImageView iv2 = this.v.findViewById(R.id.image);
         BitmapFactory.Options bmOptions2 = new BitmapFactory.Options();
         Bitmap bitmap2 = BitmapFactory.decodeFile(file.getAbsolutePath(), bmOptions2);
-        //iv2.setImageBitmap(bitmap2);
-        //images.add(bitmap2);
-        //System.out.println(images.get(0));
         ((MainActivity)getActivity()).addImage(bitmap2);
     }
 
-
+    /**
+     * PURPOSE: This method is called when the photo intent is created in
+     * order to open up the gallery to be search through and create
+     * file of the image selected to then be sent to the user.
+     * @param requestCode, code to match it allow the the gallery to open
+     * @param data, data which is the intent (in this case the load Image intent
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -230,11 +264,10 @@ public class MessageFragment extends Fragment {
     /**
      * PURPOSE: This method uses the string that was made from clicking one of the color
      * buttons and then uses that to set paintColor to the respective color that was clicked on
-     *
-     *
      */
     public void setColor(){
-        AmbilWarnaDialog colorPickerDialog = new AmbilWarnaDialog(containerActivity, paintColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+        AmbilWarnaDialog colorPickerDialog = new AmbilWarnaDialog(containerActivity, paintColor,
+                new AmbilWarnaDialog.OnAmbilWarnaListener() {
             @Override
             public void onCancel(AmbilWarnaDialog dialog) {
 

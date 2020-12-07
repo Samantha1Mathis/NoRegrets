@@ -1,7 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Samantha Mathis & Jacob Hurley-->
 <resources>
     <string name="app_name">NoRegrets</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="help">How To Use NoRegrets"\n"</string>
     <string name="info">This app is to help protect you from yourself.
         Ever send a drunk text and regretting immediately afterwards? "\n\n" Use this app to send all
