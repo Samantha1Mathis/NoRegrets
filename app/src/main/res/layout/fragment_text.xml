@@ -9,33 +9,26 @@
     android:id="@+id/outer"
     tools:context="com.example.noregrets.TextFragment">
 
-    <TextView
-        android:id="@+id/condition"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Answered at least 4 questions"
-        app:layout_constraintBottom_toTopOf="@id/news"
-        app:layout_constraintLeft_toLeftOf="@id/outer"
-        app:layout_constraintRight_toRightOf="@id/outer"
-        app:layout_constraintTop_toTopOf="@id/outer" />
 
     <TextView
         android:id="@+id/messages"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="128dp"
+        android:layout_height="41dp"
+        android:text="Messages"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toTopOf="@id/contact_list_view"
         app:layout_constraintLeft_toLeftOf="@id/outer"
         app:layout_constraintRight_toLeftOf="@id/news"
-        app:layout_constraintTop_toBottomOf="@id/condition"
-        app:layout_constraintBottom_toTopOf="@id/contact_list_view"
-        android:text="Messages"/>
+        app:layout_constraintTop_toTopOf="@id/outer" />
 
     <Button
         android:id="@+id/news"
+        android:padding="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toRightOf="@id/messages"
         app:layout_constraintRight_toRightOf="@id/outer"
-        app:layout_constraintTop_toBottomOf="@id/condition"
+        app:layout_constraintTop_toTopOf="@id/outer"
         app:layout_constraintBottom_toTopOf="@id/contact_list_view"
         android:onClick="newClick"
         android:text="New Message" />

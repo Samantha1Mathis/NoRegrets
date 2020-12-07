@@ -25,6 +25,7 @@
        android:layout_height="330dp"
        android:layout_marginTop="20dp"
        android:scrollbars="vertical"
+       android:textSize="20dp"
        android:text="previous messages"
        app:layout_constraintBottom_toTopOf="@id/current"
        app:layout_constraintLeft_toLeftOf="@id/outer"
@@ -51,10 +52,10 @@
        android:id="@+id/current"
        android:layout_width="750dp"
        android:layout_height="45dp"
-       android:backgroundTint="@color/textColor"
        android:ems="40"
        android:hint="Message"
-       android:textColor="#070505"
+       android:textColor="@color/textColor"
+       android:backgroundTint="@color/textColor"
        app:layout_constraintBottom_toTopOf="@id/camera"
        app:layout_constraintLeft_toLeftOf="@id/outer"
        app:layout_constraintRight_toLeftOf="@id/send"
@@ -69,7 +70,7 @@
        app:layout_constraintBottom_toTopOf="@id/draw"
        app:layout_constraintLeft_toRightOf="@id/current"
        app:layout_constraintRight_toRightOf="@id/outer"
-       app:layout_constraintTop_toBottomOf="@+id/image" />
+       app:layout_constraintTop_toBottomOf="@+id/scroll_image" />
 
    <Button
        android:id="@+id/camera"
@@ -82,7 +83,8 @@
        app:layout_constraintLeft_toLeftOf="@id/outer"
        app:layout_constraintRight_toLeftOf="@id/photo"
        app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintTop_toBottomOf="@id/current" />
+       app:layout_constraintTop_toBottomOf="@id/current"
+       android:layout_marginLeft="25dp" />
 
    <Button
        android:id="@+id/photo"
@@ -137,8 +139,6 @@
        app:layout_constraintTop_toBottomOf="@id/draw">
 
    </LinearLayout>
-
-
 
    <SeekBar
        android:id="@+id/stroke"

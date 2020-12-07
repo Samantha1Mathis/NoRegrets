@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:padding="10dp"
-        android:textSize="35dp"
+        android:textSize="30dp"
         android:id="@+id/contact_row_text_view" />
 
 </LinearLayout>

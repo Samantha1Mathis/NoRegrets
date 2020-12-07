@@ -38,18 +38,20 @@ public class QuestionsFragment extends Fragment {
     public Activity containerActivity = null;
     private ArrayList<Integer> primeNumbers = new ArrayList<Integer>();
     private ArrayList<Character> mathSymbols = new ArrayList<Character>();
-    Button rotate;
-    Button next;
-    ImageView iv;
-    Animation animRotate;
-    Animation animSlide;
-    View v = null;
-    String pref = "";
-    EditText answerQuestion;
+    private Button rotate;
+    private Button next;
+    private ImageView iv;
+    private Animation animRotate;
+    private Animation animSlide;
+    private View v = null;
+    private String pref = "";
+    private EditText answerQuestion;
     public String question = "";
     public int answer;
-    TextView questionView;
-    int difficulty = 1;
+    private TextView questionView;
+    private int difficulty = 1;
+
+
     public QuestionsFragment(String pref, int difficulty) {
         mathSymbols.add('+');
         mathSymbols.add('-');
@@ -64,28 +66,26 @@ public class QuestionsFragment extends Fragment {
 
     }
 
+    /**
+     * PURPOSE: This method connects this fragment
+     * to the activity that created it
+     *
+     * @param containerActivity, which would be MainActivity
+     */
     public void setContainerActivity(Activity containerActivity) {
         this.containerActivity = containerActivity;
     }
+
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-            this.v = inflater.inflate(R.layout.fragment_questions, container, false);
-            rotate = (Button) v.findViewById(R.id.rotate);
-            next = (Button) v.findViewById(R.id.next);
+        this.v = inflater.inflate(R.layout.fragment_questions, container, false);
+        rotate = (Button) v.findViewById(R.id.rotate);
+        next = (Button) v.findViewById(R.id.next);
 
-        //View v = inflater.inflate(R.layout.fragment_questions, container, false);
         questionView = (TextView) v.findViewById(R.id.question);
         questionView.setText(question);
-        answerQuestion = (EditText) v.findViewById(R.id.answer);
-
-        int width = (((MainActivity)getActivity()).metrics.widthPixels)/70;
-        answerQuestion.setEms((int) width);
-        // Inflate the layout for this fragment
-        //return v;
-
-
 
         // Rotate
         rotate.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +105,6 @@ public class QuestionsFragment extends Fragment {
         });
         // Slide
         next.setOnClickListener(new View.OnClickListener() {
-            //private TextView tx = v.findViewById(R.id.question);
             @Override
             public void onClick(View v) {
                 int input = 0;

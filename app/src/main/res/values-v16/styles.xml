@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppThemeDark" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">#64CFFF</item>
+        <item name="colorPrimaryDark">#21345B</item>
+        <item name="android:textColor">#8BC0EA</item>
+        <item name="android:fontFamily">@font/bree</item>
+        <item name="android:background">#050505</item>
+
+        <item name="android:buttonStyle">@style/ButtonThemeDark</item>
+    </style>
+
+    <style name="AppThemeLight" parent="Theme.AppCompat.Light">
+
+        <item name="colorPrimary">#D57193</item>
+        <item name="colorPrimaryDark">#1A94F6</item>
+        <item name="android:textColor">#050505</item>
+        <item name="android:background">#A0C8E8</item>
+        <item name="android:fontFamily">@font/bree</item>
+        <item name="android:buttonStyle">@style/ButtonTheme</item>
+    </style>
+</resources>

@@ -51,7 +51,7 @@
 
     <EditText
         android:id="@+id/current"
-        android:ems="15"
+        android:ems="10"
         android:hint="Message"
         android:textColor="@color/textColor"
         android:backgroundTint="@color/textColor"
@@ -59,7 +59,7 @@
         app:layout_constraintRight_toLeftOf="@id/send"
         app:layout_constraintTop_toBottomOf="@id/messages"
         app:layout_constraintBottom_toTopOf="@id/camera"
-        android:layout_width="wrap_content"
+        android:layout_width="275dp"
         android:layout_height="wrap_content"/>
 
     <Button
