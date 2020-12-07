@@ -68,7 +68,7 @@ public class QuestionsFragment extends Fragment {
     public void setContainerActivity(Activity containerActivity) {
         this.containerActivity = containerActivity;
     }
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -144,13 +144,6 @@ public class QuestionsFragment extends Fragment {
                 } catch (NumberFormatException e) {
 
                 }
-
-                //animSlide = AnimationUtils.loadAnimation(containerActivity,
-                // R.anim.slide);
-
-                //questionView.startAnimation(animSlide);
-
-
 
             }
         });
