@@ -134,7 +134,6 @@ public class QuestionsFragment extends Fragment {
                     }
                     ((MainActivity) getActivity()).addAnswer(sendQuestion);
                     if (((MainActivity) getActivity()).getNumberAnswered() == 5){
-                        // TODO add writing to internal storage
                         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(contextHolder);
                         SharedPreferences.Editor editor = preferences.edit();
                         int i=1;
