@@ -188,6 +188,14 @@ public class QuestionsFragment extends Fragment {
                             ((MainActivity) getActivity()).allAnswers.clear();
                         }
                         else{
+
+
+
+                            //FreezeApp temp = new FreezeApp();
+                            //temp.onStartCommand(null,0,1);
+
+
+                            //Freeze the app if got it wrong
                             if (pref.equals("LIGHT")) {
                                 iv.setImageDrawable(getResources().getDrawable(R.drawable.timerblack));
                             }else{
@@ -196,31 +204,12 @@ public class QuestionsFragment extends Fragment {
                             }
                             animRotate = AnimationUtils.loadAnimation(containerActivity,
                                     R.anim.rotate);
-                            iv.startAnimation(animRotate);
-                            iv.clearAnimation();
-                            next.setOnClickListener(new View.OnClickListener() {
 
-                                @Override
-                                public void onClick(View v) {
-                                }
-
-
-                            });
-                            long time = SystemClock.elapsedRealtime();
-                            while (SystemClock.elapsedRealtime() < time+120000){
-
-                            }
-
-
-                            //FreezeApp temp = new FreezeApp();
-                            //temp.onStartCommand(null,0,1);
-
-
-                            //Freeze the app if got it wrong
+                            new FreezeApp(animRotate,iv).execute("");
                             ((MainActivity) getActivity()).NumberAnswered = 0;
                             ((MainActivity) getActivity()).NumberCorrect = 0;
                             ((MainActivity) getActivity()).allAnswers.clear();
-                            ((MainActivity)getActivity()).nextClick(v);
+
 
 
                         }
@@ -393,7 +382,7 @@ public class QuestionsFragment extends Fragment {
 
     }
 
-    public class FreezeApp extends Service {
+    /*public class FreezeApp extends Service {
 
 
         View v;
@@ -434,6 +423,57 @@ public class QuestionsFragment extends Fragment {
         public IBinder onBind(Intent intent) {
             return null;
         }
+    }*/
+    private class FreezeApp extends AsyncTask<String, Void, JSONObject> {
+
+        private Context context = null;
+        Animation animRotate;
+        ImageView iv;
+        public FreezeApp(Animation animRotate, ImageView iv){
+            this.animRotate = animRotate;
+            this.iv = iv;
+        }
+
+
+        @Override
+        /**
+         * This method reads in a String from the flickr API with a custom link we use and
+         * returns the string as a json object.
+         */
+        protected JSONObject doInBackground(String... strings) {
+            animRotate = AnimationUtils.loadAnimation(containerActivity,
+                    R.anim.rotate);
+            iv.startAnimation(animRotate);
+            iv.clearAnimation();
+
+
+            next.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                }
+
+
+            });
+            long time = SystemClock.elapsedRealtime();
+            while (SystemClock.elapsedRealtime() < time+10000){
+
+            }
+
+            return null;
+        }
+
+        /**
+         * This method parses the string for important info such as the photo url, owner, id, format
+         * tags, and date taken. It then sets this info into its correct locations to be displayed.
+         * @param json
+         */
+        protected void onPostExecute(JSONObject json){
+            ((MainActivity)getActivity()).nextClick(v);
+        }
+
+
+
     }
 
 }
