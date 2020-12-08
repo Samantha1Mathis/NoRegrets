@@ -15,6 +15,7 @@ import android.os.IBinder;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.util.Pair;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Clock;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Random;
@@ -89,6 +91,20 @@ public class QuestionsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         this.v = inflater.inflate(R.layout.fragment_questions, container, false);
+        v.setFocusableInTouchMode(true);
+        v.requestFocus();
+        v.setOnKeyListener( new View.OnKeyListener()
+        {
+            @Override
+            public boolean onKey( View v, int keyCode, KeyEvent event )
+            {
+                if( keyCode == KeyEvent.KEYCODE_BACK )
+                {
+                    return true;
+                }
+                return false;
+            }
+        } );
         next = (Button) v.findViewById(R.id.next);
 
         questionView = (TextView) v.findViewById(R.id.question);
@@ -180,18 +196,21 @@ public class QuestionsFragment extends Fragment {
                             iv.startAnimation(animRotate);
                             iv.clearAnimation();
 
-                            FreezeApp temp = new FreezeApp();
-                            temp.onStartCommand(null,0,1);
+                            //FreezeApp temp = new FreezeApp();
+                            //temp.onStartCommand(null,0,1);
 
 
                             //Freeze the app if got it wrong
+                            ((MainActivity) getActivity()).NumberAnswered = 0;
+                            ((MainActivity) getActivity()).NumberCorrect = 0;
+                            ((MainActivity) getActivity()).allAnswers.clear();
+                            ((MainActivity)getActivity()).nextClick(v);
 
 
                         }
                         ((MainActivity) getActivity()).NumberAnswered = 0;
                         ((MainActivity) getActivity()).NumberCorrect = 0;
                         ((MainActivity) getActivity()).allAnswers.clear();
-                        ((MainActivity)getActivity()).nextClick(v);
 
                     }
                     else{

@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.outer,
                 displayFragment);
-        transaction.addToBackStack(null);
+        transaction.addToBackStack("main");
         transaction.commit();
     }
 
