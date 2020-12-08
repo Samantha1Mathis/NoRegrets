@@ -31,7 +31,7 @@ public class SingleAttemptResult extends Fragment {
         View v = inflater.inflate(R.layout.fragment_single_attempt_result, container, false);
 
         TextView title = (TextView)v.findViewById(R.id.AttemptNumber);
-        title.setText(Integer.toString(attemptNumber));
+        title.setText(Integer.toString(attemptNumber-1));
         TextView QuestionAsked1 = (TextView)v.findViewById(R.id.QuestionAskedReplace1);
         QuestionAsked1.setText(preferences.getString("Attempt_" + (attemptNumber-1) + "_Question_" + 1,"Could not find"));
         TextView CorrectAnswer1 = (TextView)v.findViewById(R.id.CorrectAnswer1);
