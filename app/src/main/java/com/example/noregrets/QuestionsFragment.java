@@ -187,7 +187,6 @@ public class QuestionsFragment extends Fragment {
 
                     }
                     else{
-
                         ((MainActivity)getActivity()).nextClick(v);
                     }
                 } catch (NumberFormatException e) {
