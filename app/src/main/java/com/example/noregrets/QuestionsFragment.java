@@ -403,7 +403,7 @@ public class QuestionsFragment extends Fragment {
 
             });
             try {
-                (new Thread()).sleep(120000);
+                (new Thread()).sleep(100000);
 
             } catch (InterruptedException e) {
                 e.printStackTrace();

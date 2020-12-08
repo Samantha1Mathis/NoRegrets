@@ -482,6 +482,7 @@ public class MainActivity extends AppCompatActivity {
         Intent smsIntent = new Intent(Intent.ACTION_SEND);
         smsIntent.setType("vnd.android-dir/mms-sms");
         smsIntent.setData(Uri.parse("sms:" + this.phone));
+
         smsIntent.putExtra(Intent.EXTRA_STREAM, uri);
         smsIntent.setType("image/jpeg");
         startActivity(smsIntent);
