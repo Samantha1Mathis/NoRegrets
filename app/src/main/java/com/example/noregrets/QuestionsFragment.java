@@ -3,12 +3,15 @@ package com.example.noregrets;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.util.Pair;
@@ -23,6 +26,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
@@ -110,7 +114,6 @@ public class QuestionsFragment extends Fragment {
                     iv.setImageDrawable(getResources().getDrawable(R.drawable.timerblack));
                 }else{
                     iv.setImageDrawable(getResources().getDrawable(R.drawable.timerwhite));
-
                 }
                 animRotate = AnimationUtils.loadAnimation(containerActivity,
                         R.anim.rotate);
@@ -175,6 +178,10 @@ public class QuestionsFragment extends Fragment {
                             animRotate = AnimationUtils.loadAnimation(containerActivity,
                                     R.anim.rotate);
                             iv.startAnimation(animRotate);
+                            iv.clearAnimation();
+
+                            FreezeApp temp = new FreezeApp();
+                            temp.onStartCommand(null,0,1);
 
 
                             //Freeze the app if got it wrong
@@ -184,6 +191,7 @@ public class QuestionsFragment extends Fragment {
                         ((MainActivity) getActivity()).NumberAnswered = 0;
                         ((MainActivity) getActivity()).NumberCorrect = 0;
                         ((MainActivity) getActivity()).allAnswers.clear();
+                        ((MainActivity)getActivity()).nextClick(v);
 
                     }
                     else{
@@ -352,6 +360,49 @@ public class QuestionsFragment extends Fragment {
 
 
 
+    }
+
+    public class FreezeApp extends Service {
+
+
+        View v;
+        public FreezeApp(){
+            //this.v = v;
+        }
+        @Override
+
+        public int onStartCommand(Intent intent, int flags, int startId) {
+            System.out.println("reached");
+
+            //Button next = (Button) v.findViewById(R.id.next);
+            next.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                }
+
+
+            });
+            try {
+                (new Thread()).sleep(120000);
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return START_STICKY;
+        }
+
+        @Override
+        public void onDestroy() {
+            super.onDestroy();
+
+        }
+
+        @Nullable
+        @Override
+        public IBinder onBind(Intent intent) {
+            return null;
+        }
     }
 
 }
