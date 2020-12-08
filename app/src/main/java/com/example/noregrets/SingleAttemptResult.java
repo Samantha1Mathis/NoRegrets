@@ -39,7 +39,7 @@ public class SingleAttemptResult extends Fragment {
         TextView UserAnswer1 = (TextView)v.findViewById(R.id.UserAnswer1);
         UserAnswer1.setText(preferences.getString("Attempt_" + (attemptNumber-1) + "_UserAnswer_" + 1,""));
         TextView CorrectOrIncorrect1 = (TextView)v.findViewById(R.id.CorrectOrIncorrect1);
-        CorrectOrIncorrect1.setText(preferences.getString("Attempt_" + (attemptNumber-1)+"\n" + "_CorrectOrIncorrect_" + 1,""));
+        CorrectOrIncorrect1.setText(preferences.getString("Attempt_" + (attemptNumber-1) + "_CorrectOrIncorrect_" + 1,"")+"\n");
 
         TextView QuestionAsked2 = (TextView)v.findViewById(R.id.QuestionAskedReplace2);
         QuestionAsked2.setText(preferences.getString("Attempt_" + (attemptNumber-1) + "_Question_" + 2,""));
@@ -48,7 +48,7 @@ public class SingleAttemptResult extends Fragment {
         TextView UserAnswer2 = (TextView)v.findViewById(R.id.UserAnswer2);
         UserAnswer2.setText(preferences.getString("Attempt_" + (attemptNumber-1) + "_UserAnswer_" + 2,""));
         TextView CorrectOrIncorrect2 = (TextView)v.findViewById(R.id.CorrectOrIncorrect2);
-        CorrectOrIncorrect2.setText(preferences.getString("Attempt_" + (attemptNumber-1)+"\n" + "_CorrectOrIncorrect_" + 2,""));
+        CorrectOrIncorrect2.setText(preferences.getString("Attempt_" + (attemptNumber-1) + "_CorrectOrIncorrect_" + 2,"")+"\n");
 
         TextView QuestionAsked3 = (TextView)v.findViewById(R.id.QuestionAskedReplace3);
         QuestionAsked3.setText(preferences.getString("Attempt_" + (attemptNumber-1) + "_Question_" + 3,""));
@@ -57,7 +57,7 @@ public class SingleAttemptResult extends Fragment {
         TextView UserAnswer3 = (TextView)v.findViewById(R.id.UserAnswer3);
         UserAnswer3.setText(preferences.getString("Attempt_" + (attemptNumber-1) + "_UserAnswer_" + 3,""));
         TextView CorrectOrIncorrect3 = (TextView)v.findViewById(R.id.CorrectOrIncorrect3);
-        CorrectOrIncorrect3.setText(preferences.getString("Attempt_" + (attemptNumber-1)+"\n" + "_CorrectOrIncorrect_" + 3,""));
+        CorrectOrIncorrect3.setText(preferences.getString("Attempt_" + (attemptNumber-1) + "_CorrectOrIncorrect_" + 3,"")+"\n");
 
         TextView QuestionAsked4 = (TextView)v.findViewById(R.id.QuestionAskedReplace4);
         QuestionAsked4.setText(preferences.getString("Attempt_" + (attemptNumber-1) + "_Question_" + 4,""));
@@ -66,7 +66,7 @@ public class SingleAttemptResult extends Fragment {
         TextView UserAnswer4 = (TextView)v.findViewById(R.id.UserAnswer4);
         UserAnswer4.setText(preferences.getString("Attempt_" + (attemptNumber-1) + "_UserAnswer_" + 4,""));
         TextView CorrectOrIncorrect4 = (TextView)v.findViewById(R.id.CorrectOrIncorrect4);
-        CorrectOrIncorrect4.setText(preferences.getString("Attempt_" + (attemptNumber-1)+"\n"+ "_CorrectOrIncorrect_" + 4,""));
+        CorrectOrIncorrect4.setText(preferences.getString("Attempt_" + (attemptNumber-1)+ "_CorrectOrIncorrect_" + 4,"") +"\n");
 
         TextView QuestionAsked5 = (TextView)v.findViewById(R.id.QuestionAskedReplace5);
         QuestionAsked5.setText(preferences.getString("Attempt_" + (attemptNumber-1) + "_Question_" + 5,""));
@@ -75,7 +75,7 @@ public class SingleAttemptResult extends Fragment {
         TextView UserAnswer5 = (TextView)v.findViewById(R.id.UserAnswer5);
         UserAnswer5.setText(preferences.getString("Attempt_" + (attemptNumber-1) + "_UserAnswer_" + 5,""));
         TextView CorrectOrIncorrect5 = (TextView)v.findViewById(R.id.CorrectOrIncorrect5);
-        CorrectOrIncorrect5.setText(preferences.getString("Attempt_" + (attemptNumber-1) + "_CorrectOrIncorrect_" + 5,""));
+        CorrectOrIncorrect5.setText(preferences.getString("Attempt_" + (attemptNumber-1)+ "_CorrectOrIncorrect_" + 5,"")+"\n" );
         return v;
     }
 }
