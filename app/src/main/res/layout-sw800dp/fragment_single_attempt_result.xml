@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="400dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/AttemptNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginLeft="100dp"
+            android:text="30"
+            android:textSize="@android:dimen/app_icon_size"></TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="First Question:"
+            android:textSize="25dp"></TextView>
+
+        <TextView
+            android:id="@+id/QuestionAskedReplace1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="25dp"></TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="correct Answer:"
+            android:textSize="25dp"></TextView>
+
+        <TextView
+            android:id="@+id/CorrectAnswer1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"></TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User Answer:"
+            android:textSize="25dp"></TextView>
+
+        <TextView
+            android:id="@+id/UserAnswer1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"></TextView>
+
+        <TextView
+            android:id="@+id/CorrectOrIncorrect1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"></TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Second Question:"
+            android:textSize="25dp"></TextView>
+
+        <TextView
+            android:id="@+id/QuestionAskedReplace2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="25dp"></TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="correct Answer:"
+            android:textSize="25dp"></TextView>
+
+        <TextView
+            android:id="@+id/CorrectAnswer2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"></TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User Answer:"
+            android:textSize="25dp"></TextView>
+
+        <TextView
+            android:id="@+id/UserAnswer2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"></TextView>
+
+        <TextView
+            android:id="@+id/CorrectOrIncorrect2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"></TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Third Question:"
+            android:textSize="25dp"></TextView>
+
+        <TextView
+            android:id="@+id/QuestionAskedReplace3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="25dp"></TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Correct Answer:"
+            android:textSize="25dp"></TextView>
+
+        <TextView
+            android:id="@+id/CorrectAnswer3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"></TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User Answer:"
+            android:textSize="25dp"></TextView>
+
+        <TextView
+            android:id="@+id/UserAnswer3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"></TextView>
+
+        <TextView
+            android:id="@+id/CorrectOrIncorrect3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"></TextView>
+    </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="400dp"
+            android:layout_marginTop="75dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fourth Question:"
+                android:textSize="25dp"></TextView>
+
+            <TextView
+                android:id="@+id/QuestionAskedReplace4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="25dp"></TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Correct Answer:"
+                android:textSize="25dp"></TextView>
+
+            <TextView
+                android:id="@+id/CorrectAnswer4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25dp"></TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User Answer:"
+                android:textSize="25dp"></TextView>
+
+            <TextView
+                android:id="@+id/UserAnswer4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25dp"></TextView>
+
+            <TextView
+                android:id="@+id/CorrectOrIncorrect4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25dp"></TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fifth Question:"
+                android:textSize="25dp"></TextView>
+
+            <TextView
+                android:id="@+id/QuestionAskedReplace5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="25dp"></TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Correct Answer:"
+                android:textSize="25dp"></TextView>
+
+            <TextView
+                android:id="@+id/CorrectAnswer5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25dp"></TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User Answer:"
+                android:textSize="25dp"></TextView>
+
+            <TextView
+                android:id="@+id/UserAnswer5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25dp"></TextView>
+
+            <TextView
+                android:id="@+id/CorrectOrIncorrect5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25dp"></TextView>
+
+
+        </LinearLayout>
+
+</LinearLayout>
