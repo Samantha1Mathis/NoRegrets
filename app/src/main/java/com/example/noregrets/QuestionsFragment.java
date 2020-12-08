@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -109,7 +110,8 @@ public class QuestionsFragment extends Fragment {
             }
         } );
         next = (Button) v.findViewById(R.id.next);
-
+        this.iv = v.findViewById(R.id.timer);
+        iv.setVisibility(View.INVISIBLE);
         questionView = (TextView) v.findViewById(R.id.question);
         questionView.setText(question);
 
@@ -143,6 +145,8 @@ public class QuestionsFragment extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             //private TextView tx = v.findViewById(R.id.question);
             private ImageView iv = v.findViewById(R.id.timer);
+
+
             @Override
             public void onClick(View v) {
                 int input = 0;
@@ -443,6 +447,7 @@ public class QuestionsFragment extends Fragment {
         public FreezeApp(Animation animRotate, ImageView iv){
             this.animRotate = animRotate;
             this.iv = iv;
+            this.iv.setVisibility(View.VISIBLE);
         }
 
 
@@ -452,11 +457,8 @@ public class QuestionsFragment extends Fragment {
          * returns the string as a json object.
          */
         protected JSONObject doInBackground(String... strings) {
-            animRotate = AnimationUtils.loadAnimation(containerActivity,
-                    R.anim.rotate);
-            iv.startAnimation(animRotate);
-            iv.clearAnimation();
 
+            iv.startAnimation(animRotate);
 
             next.setOnClickListener(new View.OnClickListener() {
 

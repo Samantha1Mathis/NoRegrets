@@ -26,9 +26,10 @@
         android:layout_height="45dp"
         android:hint="Answer"
         android:ems="10"
+        android:layout_marginBottom="100dp"
         android:textColor="@color/textColor"
         android:backgroundTint="@color/textColor"
-        app:layout_constraintBottom_toTopOf="@id/submit"
+        app:layout_constraintBottom_toBottomOf="@id/outer"
         app:layout_constraintLeft_toLeftOf="@id/outer"
         app:layout_constraintRight_toLeftOf="@id/next"
         app:layout_constraintTop_toBottomOf="@id/question" />
@@ -38,27 +39,19 @@
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:text="Next"
+        android:layout_marginBottom="100dp"
         android:layout_marginTop="10dp"
-        app:layout_constraintBottom_toTopOf="@id/submit"
+        app:layout_constraintBottom_toBottomOf="@id/outer"
         app:layout_constraintLeft_toRightOf="@id/answer"
         app:layout_constraintRight_toRightOf="@id/outer"
         app:layout_constraintTop_toTopOf="@id/question"/>
 
-    <Button
-        android:id="@+id/submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="@id/outer"
-        app:layout_constraintRight_toRightOf="@id/outer"
-        app:layout_constraintTop_toBottomOf="@id/answer"
-        app:layout_constraintBottom_toBottomOf="@id/outer"
-        android:onClick="submitClick"
-        android:text="Submit"/>
-
-
-
     <ImageView
         android:id="@+id/timer"
+        app:layout_constraintLeft_toLeftOf="@id/outer"
+        app:layout_constraintRight_toRightOf="@id/outer"
+        app:layout_constraintTop_toTopOf="@id/outer"
+        app:layout_constraintBottom_toBottomOf="@id/outer"
         android:layout_width="100dp"
         android:layout_height="100dp" />
 
