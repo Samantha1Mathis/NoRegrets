@@ -183,6 +183,9 @@ public class QuestionsFragment extends Fragment {
 
                         if (((MainActivity) getActivity()).getNumberCorrect() >= 4){
                             ((MainActivity) getActivity()).createTextFrag();
+                            ((MainActivity) getActivity()).NumberAnswered = 0;
+                            ((MainActivity) getActivity()).NumberCorrect = 0;
+                            ((MainActivity) getActivity()).allAnswers.clear();
                         }
                         else{
                             if (pref.equals("LIGHT")) {
@@ -195,6 +198,19 @@ public class QuestionsFragment extends Fragment {
                                     R.anim.rotate);
                             iv.startAnimation(animRotate);
                             iv.clearAnimation();
+                            next.setOnClickListener(new View.OnClickListener() {
+
+                                @Override
+                                public void onClick(View v) {
+                                }
+
+
+                            });
+                            long time = SystemClock.elapsedRealtime();
+                            while (SystemClock.elapsedRealtime() < time+120000){
+
+                            }
+
 
                             //FreezeApp temp = new FreezeApp();
                             //temp.onStartCommand(null,0,1);
@@ -208,10 +224,6 @@ public class QuestionsFragment extends Fragment {
 
 
                         }
-                        ((MainActivity) getActivity()).NumberAnswered = 0;
-                        ((MainActivity) getActivity()).NumberCorrect = 0;
-                        ((MainActivity) getActivity()).allAnswers.clear();
-
                     }
                     else{
                         ((MainActivity)getActivity()).nextClick(v);
