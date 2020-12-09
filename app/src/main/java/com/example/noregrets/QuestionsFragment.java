@@ -1,17 +1,10 @@
 package com.example.noregrets;
 
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.IBinder;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.util.Pair;
@@ -19,30 +12,19 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
-
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.time.Clock;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Random;
@@ -89,6 +71,15 @@ public class QuestionsFragment extends Fragment {
         this.containerActivity = containerActivity;
     }
 
+    /**
+     * This method creates the view and creates the onclick methods for next and removes the ability
+     * to move backwards. The next method will save the information from the questions after 5
+     * have been answered
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return View
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
@@ -100,7 +91,6 @@ public class QuestionsFragment extends Fragment {
             @Override
             public boolean onKey( View v, int keyCode, KeyEvent event )
             {
-                System.out.println("Keycode is: " + keyCode);
                 if( keyCode == KeyEvent.KEYCODE_BACK )
                 {
 
@@ -126,31 +116,15 @@ public class QuestionsFragment extends Fragment {
         answerQuestion.setEms((int) width);
 
 
-        // Change BECAUSE ROTATE WILL BE DELTED
-        /*rotate.setOnClickListener(new View.OnClickListener() {
-            private ImageView iv = v.findViewById(R.id.timer);
-            @Override
-            public void onClick(View v) {
-                if (pref.equals("LIGHT")) {
-                    iv.setImageDrawable(getResources().getDrawable(R.drawable.timerblack));
-                }else{
-                    iv.setImageDrawable(getResources().getDrawable(R.drawable.timerwhite));
-                }
-                animRotate = AnimationUtils.loadAnimation(containerActivity,
-                        R.anim.rotate);
-                this.iv.startAnimation(animRotate);
-            }
-        });*/
-        // Change to make questions
+        // when the next button is pressed
         next.setOnClickListener(new View.OnClickListener() {
-            //private TextView tx = v.findViewById(R.id.question);
             private ImageView iv = v.findViewById(R.id.timer);
 
 
             @Override
             public void onClick(View v) {
                 int input = 0;
-                try{
+                try{ // make sure the text is an integer
                     input = Integer.parseInt(answerQuestion.getText().toString());
                     ArrayList<String> sendQuestion = new ArrayList<String>();
                     sendQuestion.add(question);
@@ -170,7 +144,7 @@ public class QuestionsFragment extends Fragment {
                         SharedPreferences.Editor editor = preferences.edit();
                         int i=1;
                         int AttemptNumber = preferences.getInt("AttemptNumber",1);
-                        for(ArrayList<String> answers: ((MainActivity) getActivity()).allAnswers){
+                        for(ArrayList<String> answers: ((MainActivity) getActivity()).allAnswers){  // add data to preferences for user to access later
                             editor.putString("Attempt_" + AttemptNumber + "_Question_" + i, answers.get(0)); // question
                             editor.commit();
                             editor.putString("Attempt_" + AttemptNumber + "_CorrectAnswer_" + i, answers.get(1)); // correct answer
@@ -181,61 +155,43 @@ public class QuestionsFragment extends Fragment {
                             editor.commit();
                             i++;
                         }
-                        System.out.println(preferences.getString("Attempt_" + AttemptNumber + "_Question_" + 5,"Not Found"));
                         editor.remove("AttemptNumber");
                         editor.commit();
                         editor.putInt("AttemptNumber",AttemptNumber+1);
                         editor.commit();
-                        System.out.println(preferences.getInt("AttemptNumber",100));
 
-                        if (((MainActivity) getActivity()).getNumberCorrect() >= 4){
+                        if (((MainActivity) getActivity()).getNumberCorrect() >= 4){  // if the user passed reset questions and move on
                             ((MainActivity) getActivity()).createTextFrag();
                             ((MainActivity) getActivity()).NumberAnswered = 0;
                             ((MainActivity) getActivity()).NumberCorrect = 0;
                             ((MainActivity) getActivity()).allAnswers.clear();
                         }
-                        else{
-
-
-
-                            //FreezeApp temp = new FreezeApp();
-                            //temp.onStartCommand(null,0,1);
-
-
-                            //Freeze the app if got it wrong
+                        else{ //Freeze the app for 2 minutes if got it wrong
                             if (pref.equals("LIGHT")) {
                                 iv.setImageDrawable(getResources().getDrawable(R.drawable.timerblack));
                             }else{
                                 iv.setImageDrawable(getResources().getDrawable(R.drawable.timerwhite));
-
                             }
                             animRotate = AnimationUtils.loadAnimation(containerActivity,
                                     R.anim.rotate);
-                            containerActivity.getWindow().getDecorView().setSystemUiVisibility(
+                            containerActivity.getWindow().getDecorView().setSystemUiVisibility(  // remove navigation bar and status bar
                                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                                             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                                            //| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                                             | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
-                                            //| View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                                            | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
                                             | View.SYSTEM_UI_FLAG_IMMERSIVE);
-
-
-                            new FreezeApp(animRotate,iv).execute("");
+                            new FreezeApp(animRotate,iv).execute("");  // freeze app with asynctask
                             ((MainActivity) getActivity()).NumberAnswered = 0;
                             ((MainActivity) getActivity()).NumberCorrect = 0;
                             ((MainActivity) getActivity()).allAnswers.clear();
-
-
-
                         }
                     }
                     else{
                         ((MainActivity)getActivity()).nextClick(v);
                     }
                 } catch (NumberFormatException e) {
-
                 }
-
             }
         });
         return v;
@@ -273,8 +229,6 @@ public class QuestionsFragment extends Fragment {
         Random rand = new Random();
         ArrayList<Character> operations = new ArrayList<Character>();
         ArrayList<Integer> numbers = new ArrayList<Integer>();
-        // check difficulty, difficulty 1 = sober, difficulty 2 = drunk
-        //int difficulty = ;
         int numbersInEquation = 3;
         String equation = "";
         String urlName = "";
@@ -309,10 +263,8 @@ public class QuestionsFragment extends Fragment {
                     while(isPrime(number1)){
                         number1 = rand.nextInt(1001);
                     }
-                    System.out.println("number1 = " + number1);
                     factors.clear();
                     createFactors(number1);
-                    System.out.println("factors size is: " + factors.size() + " for " + number1);
                     number2 = factors.get(rand.nextInt(factors.size()));
                     combination.put(new Pair<Integer,Integer>(number1,number2),operation);
                 }
@@ -339,13 +291,15 @@ public class QuestionsFragment extends Fragment {
 
     }
 
+    /**
+     * This method creates a list of all of the factors of a number
+     * @param number  number to create list of factors from
+     */
     public void createFactors(int number){
         for (int i=2;i<number/2;i++)
             if (number%i==0)
                 factors.add(i);
     }
-
-
 
     private class answerSearch extends AsyncTask<String, Void, JSONObject> {
 
@@ -357,8 +311,8 @@ public class QuestionsFragment extends Fragment {
 
         @Override
         /**
-         * This method reads in a String from the flickr API with a custom link we use and
-         * returns the string as a json object.
+         * This method takes in a string which is an equation formatted for an api call and gets
+         * the answer for this equation from the api.
          */
         protected JSONObject doInBackground(String... strings) {
             JSONObject json = null;
@@ -385,60 +339,13 @@ public class QuestionsFragment extends Fragment {
         }
 
         /**
-         * This method parses the string for important info such as the photo url, owner, id, format
-         * tags, and date taken. It then sets this info into its correct locations to be displayed.
          * @param json
          */
         protected void onPostExecute(JSONObject json){
 
         }
-
-
-
     }
 
-    /*public class FreezeApp extends Service {
-
-
-        View v;
-        public FreezeApp(){
-            //this.v = v;
-        }
-        @Override
-
-        public int onStartCommand(Intent intent, int flags, int startId) {
-            System.out.println("reached");
-
-            //Button next = (Button) v.findViewById(R.id.next);
-            next.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                }
-
-
-            });
-            try {
-                (new Thread()).sleep(100000);
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return START_STICKY;
-        }
-
-        @Override
-        public void onDestroy() {
-            super.onDestroy();
-
-        }
-
-        @Nullable
-        @Override
-        public IBinder onBind(Intent intent) {
-            return null;
-        }
-    }*/
     private class FreezeApp extends AsyncTask<String, Void, JSONObject> {
 
         private Context context = null;
@@ -453,44 +360,32 @@ public class QuestionsFragment extends Fragment {
 
         @Override
         /**
-         * This method reads in a String from the flickr API with a custom link we use and
-         * returns the string as a json object.
+         * This method takes in a string (not needed) and "freezes" the app by not allowing anything
+         * to be pressed or used. the next button is disabled and the navigation and status bar are removed.
          */
         protected JSONObject doInBackground(String... strings) {
-
             iv.startAnimation(animRotate);
-
             next.setOnClickListener(new View.OnClickListener() {
-
                 @Override
                 public void onClick(View v) {
                 }
-
-
             });
             long time = SystemClock.elapsedRealtime();
-            while (SystemClock.elapsedRealtime() < time+10000){
-
+            while (SystemClock.elapsedRealtime() < time+120000){
             }
-
             return null;
         }
 
         /**
-         * This method parses the string for important info such as the photo url, owner, id, format
-         * tags, and date taken. It then sets this info into its correct locations to be displayed.
+         * This method re-enables the navigation and status bar.
          * @param json
          */
         protected void onPostExecute(JSONObject json){
             containerActivity.getWindow().getDecorView().setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
-                            //| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
             ((MainActivity)getActivity()).nextClick(v);
         }
-
-
-
     }
-
 }

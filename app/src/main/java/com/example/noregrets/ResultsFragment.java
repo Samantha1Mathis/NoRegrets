@@ -49,7 +49,7 @@ public class ResultsFragment extends Fragment {
                 ((MainActivity) getActivity()).createSingleAttemptResultPage(numberOfAttempts-i);
             }
         });
-        clear.setOnClickListener(new View.OnClickListener() {
+        clear.setOnClickListener(new View.OnClickListener() {  // the clear button removes all previous attempts
             public void onClick(View v) {
                 itemsAdapter.clear();
                 preferences.edit().remove("AttemptNumber").commit();

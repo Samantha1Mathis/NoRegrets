@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
         createMainFrag();
         setTheme();
         permission();
-        System.out.println("called");
         getDifficulty();
     }
 
@@ -596,29 +595,54 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
     public int NumberAnswered = 0;
+
+    /**
+     * This method returns the number of questions that have been answered. This int should not exceed 5
+     * @return int  number of questions answered in the attempt.
+     */
     public int getNumberAnswered(){
         return NumberAnswered;
     }
 
     public int NumberCorrect = 0;
+
+    /**
+     * This method returns the number of correct answers from the attempt. This value should not exceed 5
+     * @return int  number of correct answers in an attempt
+     */
     public int getNumberCorrect(){
         return NumberCorrect;
     }
 
     public int difficulty;
+
+    /**
+     * This method gets the difficulty from the shared preferences. If it has not been set yet, it will
+     * default to difficulty 1 (sober)
+     */
     public void getDifficulty(){
         SharedPreferences preferences =   PreferenceManager.getDefaultSharedPreferences(this);
         this.difficulty = preferences.getInt("Difficulty", 1);
     }
 
     public ArrayList<ArrayList<String>> allAnswers = new ArrayList<>();
-    public void addAnswer(ArrayList<String> singleQuestion){  // single question is in the format QUESTION, ANSWER, USERANSWER, CORRECT(right or wrong)
+
+    /**
+     * This method will add a question to the list of all answers for an attempt.
+     * @param singleQuestion  arrayList in the format QUESTION, ANSWER, USERANSWER, CORRECT(right or incorrect)
+     */
+    public void addAnswer(ArrayList<String> singleQuestion){
         if (singleQuestion.size() == 4){
             allAnswers.add(singleQuestion);
         }
     }
 
+    /**
+     * This method creates a fragment that shows a single attempt
+     * @param i  int that represents the attempt number
+     */
     public void createSingleAttemptResultPage(int i){
         SingleAttemptResult displayFragment = new SingleAttemptResult(i);
         Bundle args = new Bundle();
