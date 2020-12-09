@@ -47,8 +47,7 @@
         app:layout_constraintRight_toRightOf="@id/outer"
         app:layout_constraintTop_toTopOf="@id/question" />
 
-
-
+    <!-- Only displayed when user answers more two or more wrong-->
     <ImageView
         android:id="@+id/timer"
         app:layout_constraintLeft_toLeftOf="@id/outer"

@@ -41,6 +41,7 @@
         android:id="@+id/theme"
         android:text="Theme" />
 
+    <!-- Difficulty setting - using radio buttons to set level-->
     <TextView
         android:id="@+id/difficulty"
         android:layout_width="wrap_content"
