@@ -14,7 +14,14 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-
+/*
+ * @author: Samantha Mathis, Jacob Hurley
+ * @class: CSC 317
+ * @description: This is the singleAttemptResults fragment which the results
+ * of a single attempt that you made after you click on the attempt form the list
+ * view. It shows the question number, the question as well as the correct and user
+ * answer so you can see the statistics you ahd for the question.
+ */
 public class SingleAttemptResult extends Fragment {
 
     int attemptNumber = 1;

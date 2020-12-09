@@ -29,6 +29,15 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Random;
 
+/*
+ * @author: Samantha Mathis, Jacob Hurley
+ * @class: CSC 317
+ * @description: This is the question fragment which contains the async task and
+ * calls to the api.mathjs.org -- in order to solve the equations to compare with
+ * the users answers. This fragment "freezes" the screen if the user misses 2 or more questions
+ * so that the user has to wait out a full 2mins before moving on. It does all the math
+ * to generate the questions based on the difficulty level set
+ */
 public class QuestionsFragment extends Fragment {
     private int difficulty;
     public Activity containerActivity = null;
