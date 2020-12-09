@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
+    android:layout_margin="20dp"
     android:orientation="horizontal">
 
     <LinearLayout
@@ -31,37 +32,37 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
-            android:textSize="25dp"></TextView>
+            android:textSize="20dp"></TextView>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="correct Answer:"
-            android:textSize="25dp"></TextView>
+            android:textSize="20dp"></TextView>
 
         <TextView
             android:id="@+id/CorrectAnswer1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25dp"></TextView>
+            android:textSize="20dp"></TextView>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="User Answer:"
-            android:textSize="25dp"></TextView>
+            android:textSize="20dp"></TextView>
 
         <TextView
             android:id="@+id/UserAnswer1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25dp"></TextView>
+            android:textSize="20dp"></TextView>
 
         <TextView
             android:id="@+id/CorrectOrIncorrect1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25dp"></TextView>
+            android:textSize="20dp"></TextView>
 
         <TextView
             android:layout_width="wrap_content"
@@ -74,80 +75,80 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
-            android:textSize="25dp"></TextView>
+            android:textSize="20dp"></TextView>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="correct Answer:"
-            android:textSize="25dp"></TextView>
+            android:textSize="20dp"></TextView>
 
         <TextView
             android:id="@+id/CorrectAnswer2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25dp"></TextView>
+            android:textSize="20dp"></TextView>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="User Answer:"
-            android:textSize="25dp"></TextView>
+            android:textSize="20dp"></TextView>
 
         <TextView
             android:id="@+id/UserAnswer2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25dp"></TextView>
+            android:textSize="20dp"></TextView>
 
         <TextView
             android:id="@+id/CorrectOrIncorrect2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25dp"></TextView>
+            android:textSize="20dp"></TextView>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Third Question:"
-            android:textSize="25dp"></TextView>
+            android:textSize="20dp"></TextView>
 
         <TextView
             android:id="@+id/QuestionAskedReplace3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
-            android:textSize="25dp"></TextView>
+            android:textSize="20dp"></TextView>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Correct Answer:"
-            android:textSize="25dp"></TextView>
+            android:textSize="20dp"></TextView>
 
         <TextView
             android:id="@+id/CorrectAnswer3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25dp"></TextView>
+            android:textSize="20dp"></TextView>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="User Answer:"
-            android:textSize="25dp"></TextView>
+            android:textSize="20dp"></TextView>
 
         <TextView
             android:id="@+id/UserAnswer3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25dp"></TextView>
+            android:textSize="20dp"></TextView>
 
         <TextView
             android:id="@+id/CorrectOrIncorrect3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25dp"></TextView>
+            android:textSize="20dp"></TextView>
     </LinearLayout>
 
 
@@ -161,87 +162,87 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Fourth Question:"
-                android:textSize="25dp"></TextView>
+                android:textSize="20dp"></TextView>
 
             <TextView
                 android:id="@+id/QuestionAskedReplace4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textSize="25dp"></TextView>
+                android:textSize="20dp"></TextView>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Correct Answer:"
-                android:textSize="25dp"></TextView>
+                android:textSize="20dp"></TextView>
 
             <TextView
                 android:id="@+id/CorrectAnswer4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25dp"></TextView>
+                android:textSize="20dp"></TextView>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="User Answer:"
-                android:textSize="25dp"></TextView>
+                android:textSize="20dp"></TextView>
 
             <TextView
                 android:id="@+id/UserAnswer4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25dp"></TextView>
+                android:textSize="20dp"></TextView>
 
             <TextView
                 android:id="@+id/CorrectOrIncorrect4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25dp"></TextView>
+                android:textSize="20dp"></TextView>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Fifth Question:"
-                android:textSize="25dp"></TextView>
+                android:textSize="20dp"></TextView>
 
             <TextView
                 android:id="@+id/QuestionAskedReplace5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textSize="25dp"></TextView>
+                android:textSize="20dp"></TextView>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Correct Answer:"
-                android:textSize="25dp"></TextView>
+                android:textSize="20dp"></TextView>
 
             <TextView
                 android:id="@+id/CorrectAnswer5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25dp"></TextView>
+                android:textSize="20dp"></TextView>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="User Answer:"
-                android:textSize="25dp"></TextView>
+                android:textSize="20dp"></TextView>
 
             <TextView
                 android:id="@+id/UserAnswer5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25dp"></TextView>
+                android:textSize="20dp"></TextView>
 
             <TextView
                 android:id="@+id/CorrectOrIncorrect5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25dp"></TextView>
+                android:textSize="20dp"></TextView>
 
 
         </LinearLayout>
